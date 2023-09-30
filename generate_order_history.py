@@ -1,4 +1,5 @@
 ## Run by typing: python generate_order_history.py   ##
+## Then look at order_history.csv file ##
 
 import random
 import csv
