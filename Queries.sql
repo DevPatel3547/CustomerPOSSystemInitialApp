@@ -40,8 +40,8 @@ SELECT * FROM OrderHistory WHERE Toppings IS NOT NULL AND Toppings != '';
 -- Query 14: Find most common topping
 SELECT Toppings, COUNT(*) AS ToppingCount FROM OrderHistory WHERE Toppings IS NOT NULL AND Toppings != '' GROUP BY Toppings ORDER BY ToppingCount DESC LIMIT 1;
 
--- Query 15: Find all orders that have "" as a topping
-SELECT * FROM OrderHistory WHERE Toppings LIKE '%Red Bean%';
+-- Query 15: Find the most expensive order
+SELECT Date, Flavor, Toppings, MAX([Total Price]) AS MostExpensiveOrder FROM YourTableName WHERE [Total Price] = ( SELECT MAX([Total Price]) FROM YourTableName );
 
 
 
