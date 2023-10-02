@@ -31,6 +31,18 @@ SELECT * FROM OrderHistory WHERE Flavor = 'Matcha Latte' LIMIT 5;
 -- Query 11: Find the average number of orders per day
 SELECT AVG(OrderCount) FROM (SELECT Date, COUNT(*) AS OrderCount FROM OrderHistory GROUP BY Date) AS DailyOrders;
 
+-- Query 12: Find the average number of orders without toppings
+SELECT AVG(NoToppingsCount) AS AverageOrdersWithoutToppings FROM ( SELECT Date, COUNT(*) AS NoToppingsCount FROM OrderHistory WHERE Toppings = '' OR Toppings IS NULL GROUP BY Date ) AS OrdersWithoutToppings;
+
+-- Query 13: Find all orders with toppings
+SELECT * FROM OrderHistory WHERE Toppings IS NOT NULL AND Toppings != '';
+
+-- Query 14: Find most common topping
+SELECT Toppings, COUNT(*) AS ToppingCount FROM OrderHistory WHERE Toppings IS NOT NULL AND Toppings != '' GROUP BY Toppings ORDER BY ToppingCount DESC LIMIT 1;
+
+-- Query 15: Find all orders that have "" as a topping
+SELECT * FROM OrderHistory WHERE Toppings LIKE '%Red Bean%';
+
 
 
 
