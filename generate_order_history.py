@@ -22,10 +22,10 @@ boba_price = [5.99, 5.99, 6.45, 6.45, 5.99, 5.99, 5.25, 4.99, 4.99, 4.99, 6.99, 
               4.99, 4.99, 4.99, 6.59, 6.59, 6.59, 6.99, 6.99, 6.99, 6.99, 6.99, 5.99, 5.75, 5.99, 5.99, 5.99, 6.95, 6.95, 6.45, 6.45, 6.45]
 
 # Define a list of toppings
-toppings = ["Pearls", "Jelly", "Pudding", "Grass Jelly", "Red Bean", "Lychee Fruit"]
+toppings = ["Creme Brulee", "Coconut Jelly", "Rainbow Jelly", "Crystal Boba", "Extra Boba", "Extra Extra Boba", "Coconut Jelly", "Snow Velvet", "Brown Sugar Boba", "Reg Boba", "Extra Strawberry", "Lychee Bits"]
 
 # Define list of topping prices
-toppings_price = [0.5, 0.75, 0.69, 0.80, 1.00, 1.25]
+toppings_price = [0.80, 0.60, 0.60, 0.80, 0.60, 1.20, 0.60, 0.60, 0.80, 0.60, 0.60, 0.60]
 
 # Define the number of orders you want for the past 52 weeks (1 order per day)
 num_orders = 7 * 52
