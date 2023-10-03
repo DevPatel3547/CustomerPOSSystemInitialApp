@@ -52,3 +52,6 @@ SELECT Date, SUM([Total Price]) AS DailyTotal FROM OrderHistory GROUP BY Date OR
 --Query 18  20 items in inventory
 SELECT COUNT(*) FROM Inventory;
 
+--Query 19 Find the number of orders per week
+SELECT YEARWEEK(Date) AS WeekNumber, COUNT(*) AS OrderCount FROM OrderHistory GROUP BY WeekNumber ORDER BY WeekNumber;
+
