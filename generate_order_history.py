@@ -35,13 +35,13 @@ start_date = datetime.now() - timedelta(weeks=52)  # Adjust the week number as n
 
 
 # Add two peak sales days within the 52-week range
-peak_day1 = start_date + timedelta(weeks=20)  # Adjust the week number as needed
+peak_day1 = start_date + timedelta(weeks=1)  # Adjust the week number as needed
 peak_day2 = start_date + timedelta(weeks=40)  # Adjust the week number as needed
 
 
 # Define the number of extra orders for each peak day
-peak_day1_orders = 50  # Adjust the number of orders as needed
-peak_day2_orders = 70  # Adjust the number of orders as needed
+peak_day1_orders = 400  # Adjust the number of orders as needed
+peak_day2_orders = 400  # Adjust the number of orders as needed
 
 
 # Function to calculate the total price of an order
@@ -60,7 +60,7 @@ def calculate_order_total(order):
             topping_price += toppings_price[topping_index]
         total += flavor_price + topping_price
 
-    return round(total, 2)
+    return round(total, 2) ## rounds to 2 decimal points (for cents)
 
 # Function to generate a random order
 def generate_order():
@@ -70,7 +70,9 @@ def generate_order():
         "Items": []
     }
 
-    num_drinks = random.randint(1, 5)  # adjust the range as needed
+
+    num_drinks = 50 ##ensure at least 1 drink a day is ordered
+    num_drinks = random.randint(80, 200)  # adjust the range as needed
     for _ in range(num_drinks):
         drink = {
             "Flavor": random.choice(boba_flavors),
