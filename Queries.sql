@@ -53,8 +53,7 @@ SELECT Date, SUM([Total Price]) AS DailyTotal FROM OrderHistory GROUP BY Date OR
 SELECT COUNT(*) FROM Inventory;
 
 --Query 19 Find the number of orders per week
-SELECT YEARWEEK(STR_TO_DATE(Date, '%m/%d/%Y')) AS WeekNumber, COUNT(*) AS OrderCount FROM OrderHistory GROUP BY WeekNumber ORDER BY WeekNumber;
+SELECT EXTRACT(YEAR FROM TO_DATE(Date, 'MM/DD/YYYY')) AS Year, EXTRACT(WEEK FROM TO_DATE(Date, 'MM/DD/YYYY')) AS Week, COUNT(*) AS OrderCount FROM OrderHistory GROUP BY Year, Week ORDER BY Year, Week;
 
--- Query 20 
-
-SELECT Name, Quantity FROM Inventory LIMIT 2, 1;
+-- Query 20 Find the Item and Quantity of a single row
+SELECT Name, Quantity FROM Inventory LIMIT 1 OFFSET 2;
