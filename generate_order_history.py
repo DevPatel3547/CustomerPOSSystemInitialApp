@@ -6,10 +6,20 @@ import csv
 from datetime import datetime, timedelta
 
 # Define a list of boba tea flavors
-boba_flavors = ["Milk Tea", "Matcha Latte", "Taro Milk", "Thai Tea", "Brown Sugar Pearl", "Honey Lemon Green Tea", "Strawberry Smoothie", "Mango Slush"]
+boba_flavors = ["Brown Sugar Deerioca Creme Brulee Milk", "Brown Sugar Deerioca Milk", "Ube Creme Brulee Brown Sugar Deerioca Milk", 
+                "Ube Taro Brown Sugar Deerioca Milk", "Cocoa Brown Sugar Deerioca Milk", "Matcha Brown Sugar Deerioca Milk",
+                "Peach Oolong Tea", "Jasmine Green Tea", "Royal No. 9 Black Tea", "The Alley Assam Black Tea", "Mango LuLu",
+                "Strawberry Lulu", "Orange Lulu", "Iced Peach Oolong Grape LuLu", "Lychee LuLu", "Snow Velvet Grape LuLu",
+                "Snow Velvet Peach Oolong Tea", "Snow Velvet Jasmine Green Tea", "Snow Velvet Royal No 9", "Snow Velvet Assam Black Tea",
+                "Royal No. 9 Milk Tea", "The Alley Assam Milk Tea", "Jasmine Green Milk Tea", "The Alley Trio", "Lychee Green Tea",
+                "Mango Green Tea with Jelly Ball", "Passion Fruit Green Tea", "Original Yogurt Purple Rice", "Create Your Own Yogurt",
+                "Matcha Purple Rice Yogurt", "Peach Oolong Purple Rice Yogurt", "Yogurt Grape LuLu", "Deerioca Creme Brulee Cold Brew",
+                "Brown Sugar Cream Cold Brew", "Cocoa Cream Cold Brew", "Milk Tea Cold Brew", "Snow Velvet Cream Cold Brew",
+                "Mango Frappe", "Peach Frappe", "Taro Milk Tea", "Taro Coconut Milk Tea", "Taro Smoothie"]
 
 # Define List of boba flavor prices
-boba_price = [4.50, 5.00, 4.75, 4.25, 5.50, 4.25, 5.25, 5.50]
+boba_price = [5.99, 5.99, 6.45, 6.45, 5.99, 5.99, 5.25, 4.99, 4.99, 4.99, 6.99, 6.59, 6.59, 6.25, 7.25, 6.25, 5.99, 5.99, 5.99, 5.99, 4.99,
+              4.99, 4.99, 4.99, 6.59, 6.59, 6.59, 6.99, 6.99, 6.99, 6.99, 6.99, 5.99, 5.75, 5.99, 5.99, 5.99, 6.95, 6.95, 6.45, 6.45, 6.45]
 
 # Define a list of toppings
 toppings = ["Pearls", "Jelly", "Pudding", "Grass Jelly", "Red Bean", "Lychee Fruit"]
