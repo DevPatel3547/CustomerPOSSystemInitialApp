@@ -43,13 +43,18 @@ SELECT Toppings, COUNT(*) AS ToppingCount FROM OrderHistory WHERE Toppings IS NO
 -- Query 15: Find the most expensive order
 SELECT Date, Flavor, Toppings, MAX([Total Price]) AS MostExpensiveOrder FROM YourTableName WHERE [Total Price] = ( SELECT MAX([Total Price]) FROM YourTableName );
 
---Query 16 2 Peak days
-SELECT Date, SUM(price) AS DayTotal FROM OrderHistory GROUP BY Date ORDER BY DayTotal DESC LIMIT 2;
+-- Query 16: Realistic sales history
+SELECT HOUR(Date) AS Hour, COUNT(*) AS OrderCount, SUM([Total Price]) AS TotalOrderPrice FROM OrderHistory GROUP BY Hour;
 
+--Query 17 2 Peak days
+SELECT Date, SUM([Total Price]) AS DailyTotal FROM OrderHistory GROUP BY Date ORDER BY DailyTotal DESC LIMIT 2;
 
---Query 17  20 items in inventory
+--Query 18  20 items in inventory
 SELECT COUNT(*) FROM Inventory;
 
---Query 18 Find the number of orders per week
-SELECT YEARWEEK(Date) AS WeekNumber, COUNT(*) AS OrderCount FROM OrderHistory GROUP BY WeekNumber ORDER BY WeekNumber;
+--Query 19 Find the number of orders per week
+SELECT YEARWEEK(STR_TO_DATE(Date, '%m/%d/%Y')) AS WeekNumber, COUNT(*) AS OrderCount FROM OrderHistory GROUP BY WeekNumber ORDER BY WeekNumber;
 
+-- Query 20 
+
+SELECT Name, Quantity FROM Inventory LIMIT 2, 1;
