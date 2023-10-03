@@ -10,8 +10,9 @@ inventory_items = [
     {"Name": "Taro Flavoring", "Category": "Ingredient", "Quantity": 15, "Price": 5.00},
     {"Name": "Pearls", "Category": "Topping", "Quantity": 100, "Price": 0.50},
     {"Name": "Cups", "Category": "Disposable", "Quantity": 500, "Price": 0.10},
+    {"Name": "Large Cups", "Category": "Disposable", "Quantity": 500, "Price": 0.12},
     {"Name": "Straws", "Category": "Disposable", "Quantity": 1000, "Price": 0.05},
-
+    {"Name": "Large Straws", "Category": "Disposable", "Quantity": 1000, "Price": 0.07},
     {"Name": "Napkins", "Category": "Disposable", "Quantity": 5000, "Price": 0.02},
     {"Name": "Jelly", "Category": "Topping", "Quantity": 200, "Price": 6.00},
     {"Name": "Pudding", "Category": "Topping", "Quantity": 150, "Price": 5.50},
@@ -26,8 +27,12 @@ inventory_items = [
     {"Name": "Sanitation Wipes", "Category": "Disposable", "Quantity": 3000, "Price": 0.50},
     {"Name": "Trash Bags", "Category": "Disposable", "Quantity": 400, "Price": 0.70},
     {"Name": "Brown Sugar", "Category": "Ingredient", "Quantity": 400, "Price": 6.50},
+    {"Name": "Ice", "Category": "Ingredient", "Quantity": 100, "Price": 0.01},
     {"Name": "Strawberries", "Category": "Ingredient", "Quantity": 100, "Price": 5.45},
     {"Name": "Organic Milk", "Category": "Ingredient", "Quantity": 70, "Price": 9.05},
+    {"Name": "Soy Milk", "Category": "Ingredient", "Quantity": 70, "Price": 10.00},
+    {"Name": "Oat Milk", "Category": "Ingredient", "Quantity": 70, "Price": 10.05},
+
     # will need to add more items
 ]
 
