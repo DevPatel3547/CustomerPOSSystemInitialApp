@@ -24,7 +24,7 @@ SELECT * FROM OrderHistory WHERE Toppings IS NOT NULL AND Toppings != '';
 -- Query 12: Find most common topping
 SELECT Toppings, COUNT(*) AS ToppingCount FROM OrderHistory WHERE Toppings IS NOT NULL AND Toppings != '' GROUP BY Toppings ORDER BY ToppingCount DESC LIMIT 1;
 
--- Query 13: Realistic sales history
+-- Query 13: Realistic sales history(Req 2)
 SELECT HOUR(Date) AS Hour, COUNT(*) AS OrderCount, SUM([Total Price]) AS TotalOrderPrice FROM OrderHistory GROUP BY Hour;
 SELECT date_trunc('hour', Date::timestamp) AS HourStart,COUNT(*) AS OrderCount,SUM(price) AS TotalSales
 FROM OrderHistory
@@ -33,11 +33,18 @@ GROUP BY HourStart
 ORDER BY HourStart;
 
 
---Query 14 2 Peak days
-SELECT Date, SUM([Total Price]) AS DailyTotal FROM OrderHistory GROUP BY Date ORDER BY DailyTotal DESC LIMIT 2;
---Query 15  20 items in inventory
+--Query 14 2 Peak days(Req 3)
+SELECT Date, SUM(price) AS TotalSales FROM OrderHistory GROUP BY Date ORDER BY TotalSales DESC LIMIT 2;
+
+--Query 15  20 items in inventory(Req 4)
 SELECT COUNT(*) FROM Inventory;
---Query 16 Find the number of orders per week
-SELECT date_trunc('week', Date::date) AS WeekStart,SUM(price) AS TotalSales FROM OrderHistory WHERE Date::date >= NOW() - interval '52 weeks' GROUP BY WeekStart ORDER BY WeekStart DESC;
+
+--Query 16 Find the number of orders per week (Req 1)
+SELECT date_trunc('week', Date::date) AS WeekStart,COUNT(*) AS OrderCount 
+FROM OrderHistory
+WHERE Date::date >= NOW() - interval '52 weeks'
+GROUP BY WeekStart
+ORDER BY WeekStart DESC;
+
 -- Query 17 Find the Item and Quantity of a single row
 SELECT Name, Quantity FROM Inventory LIMIT 1 OFFSET 2;
