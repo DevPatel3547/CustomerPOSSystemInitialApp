@@ -73,7 +73,6 @@ def generate_order():
         "Toppings": random.sample(toppings, random.randint(0, 3))   
         }
     order["Items"].append(drink)
-    
     order["Total Price"] = calculate_order_total(order)  # Calculate and add the total price
         
     return order
