@@ -46,4 +46,4 @@ with open(csv_file, mode='w', newline='') as file:
     for item in inventory_items:
         writer.writerow(item)
 
-print("Inventory items have been written to inventory.csv") ##output to show it is complete
+print("Inventory items have been written to inventory.csv") ##output to show it is complete\\\

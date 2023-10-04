@@ -1,10 +1,15 @@
 Name,Category,Quantity,Price
+Milk Tea,Beverage,45,4.5
+Matcha Powder,Ingredient,18,10.0
+Taro Flavoring,Ingredient,15,5.0
 Milk Tea,Beverage,50,4.5
 Matcha Powder,Ingredient,20,10.0
 Taro Flavoring,Ingredient,15,5.0
 Pearls,Topping,100,0.5
 Cups,Disposable,500,0.1
+Large Cups,Disposable,500,0.12
 Straws,Disposable,1000,0.05
+Large Straws,Disposable,1000,0.07
 Napkins,Disposable,5000,0.02
 Jelly,Topping,200,6.0
 Pudding,Topping,150,5.5
@@ -19,5 +24,8 @@ Bubble Tea Creamer,Ingredient,2000,2.0
 Sanitation Wipes,Disposable,3000,0.5
 Trash Bags,Disposable,400,0.7
 Brown Sugar,Ingredient,400,6.5
+Ice,Ingredient,100,0.01
 Strawberries,Ingredient,100,5.45
 Organic Milk,Ingredient,70,9.05
+Soy Milk,Ingredient,70,10.0
+Oat Milk,Ingredient,70,10.05
