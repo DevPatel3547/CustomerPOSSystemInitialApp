@@ -58,8 +58,7 @@ def calculate_order_total(order):
         for topping in toppings:
             topping_index = toppings.index(topping)
             topping_price += toppings_price[topping_index]
-        total += flavor_price + topping_price
-
+        total = flavor_price + topping_price
     return round(total, 2) ## rounds to 2 decimal points (for cents)
 
 # Function to generate a random order
@@ -67,26 +66,20 @@ def generate_order():
     order_date = start_date + timedelta(days=random.randint(0, 365))
     order = {
         "Date": order_date.strftime("%Y-%m-%d"),
-        "Items": []
+        "Items": [],
     }
-
-
-    num_drinks = 50 ##ensure at least 1 drink a day is ordered
-    num_drinks = random.randint(80, 200)  # adjust the range as needed
-    for _ in range(num_drinks):
-        drink = {
-            "Flavor": random.choice(boba_flavors),
-            "Toppings": random.sample(toppings, random.randint(0, 3))
+    drink = {
+        "Flavor": random.choice(boba_flavors),
+        "Toppings": random.sample(toppings, random.randint(0, 3))   
         }
-        order["Items"].append(drink)
-    
+    order["Items"].append(drink)
     order["Total Price"] = calculate_order_total(order)  # Calculate and add the total price
-
+        
     return order
 
 # Generate orders and store them in a list
 order_history = []
-for _ in range(num_orders):
+for order in range(num_orders):
     order = generate_order()
     order_history.append(order)
 
