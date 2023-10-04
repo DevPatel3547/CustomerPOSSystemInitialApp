@@ -1,10 +1,12 @@
+## Run by typing: python generate_order_history.py   ##
+## Then look at order_history.csv file ##
+
 import random
 import csv
 from datetime import datetime, timedelta
 
-
 # Define a list of boba tea flavors
-boba_flavors = ["Brown Sugar Deerioca Creme Brulee Milk", "Brown Sugar Deerioca Milk", "Ube Creme Brulee Brown Sugar Deerioca Milk",
+boba_flavors = ["Brown Sugar Deerioca Creme Brulee Milk", "Brown Sugar Deerioca Milk", "Ube Creme Brulee Brown Sugar Deerioca Milk", 
                 "Ube Taro Brown Sugar Deerioca Milk", "Cocoa Brown Sugar Deerioca Milk", "Matcha Brown Sugar Deerioca Milk",
                 "Peach Oolong Tea", "Jasmine Green Tea", "Royal No. 9 Black Tea", "The Alley Assam Black Tea", "Mango LuLu",
                 "Strawberry Lulu", "Orange Lulu", "Iced Peach Oolong Grape LuLu", "Lychee LuLu", "Snow Velvet Grape LuLu",
@@ -15,25 +17,20 @@ boba_flavors = ["Brown Sugar Deerioca Creme Brulee Milk", "Brown Sugar Deerioca 
                 "Brown Sugar Cream Cold Brew", "Cocoa Cream Cold Brew", "Milk Tea Cold Brew", "Snow Velvet Cream Cold Brew",
                 "Mango Frappe", "Peach Frappe", "Taro Milk Tea", "Taro Coconut Milk Tea", "Taro Smoothie"]
 
-
 # Define List of boba flavor prices
 boba_price = [5.99, 5.99, 6.45, 6.45, 5.99, 5.99, 5.25, 4.99, 4.99, 4.99, 6.99, 6.59, 6.59, 6.25, 7.25, 6.25, 5.99, 5.99, 5.99, 5.99, 4.99,
               4.99, 4.99, 4.99, 6.59, 6.59, 6.59, 6.99, 6.99, 6.99, 6.99, 6.99, 5.99, 5.75, 5.99, 5.99, 5.99, 6.95, 6.95, 6.45, 6.45, 6.45]
 
-
 # Define a list of toppings
 toppings = ["Creme Brulee", "Coconut Jelly", "Rainbow Jelly", "Crystal Boba", "Extra Boba", "Extra Extra Boba", "Coconut Jelly", "Snow Velvet", "Brown Sugar Boba", "Reg Boba", "Extra Strawberry", "Lychee Bits"]
-
 
 # Define list of topping prices
 toppings_price = [0.80, 0.60, 0.60, 0.80, 0.60, 1.20, 0.60, 0.60, 0.80, 0.60, 0.60, 0.60]
 
-
 # Define the number of orders you want for the past 52 weeks (1 order per day)
 num_orders = 7 * 52
 
-
-# Define the start date
+# Define the start date 
 start_date = datetime.now() - timedelta(weeks=52)  # Adjust the week number as needed
 
 
@@ -54,20 +51,16 @@ def calculate_order_total(order):
         flavor = drink["Flavor"]
         toppings = drink["Toppings"]
 
-
         flavor_index = boba_flavors.index(flavor)
         flavor_price = boba_price[flavor_index]
-
 
         topping_price = 0
         for topping in toppings:
             topping_index = toppings.index(topping)
             topping_price += toppings_price[topping_index]
-        total += flavor_price + topping_price
+        total = flavor_price + topping_price
 
-
-    return round(total, 2)  # Rounds to 2 decimal points (for cents)
-
+    return round(total, 2) ## rounds to 2 decimal points (for cents)
 
 # Function to generate a random order
 def generate_order():
@@ -76,40 +69,41 @@ def generate_order():
         "Date": order_date.strftime("%Y-%m-%d"),
         "Items": []
     }
-
-
-    num_drinks = random.randint(1, 5)  # Random number of drinks per order (1-5)
-    for _ in range(num_drinks):
-        drink = {
-            "Flavor": random.choice(boba_flavors),
-            "Toppings": random.sample(toppings, random.randint(0, 3))
-        }
-        order["Items"].append(drink)
-
-
+    drink = {
+        "Flavor": random.choice(boba_flavors),
+        "Toppings": random.sample(toppings, random.randint(0, 3))
+    }
+    order["Items"].append(drink)
+    
     order["Total Price"] = calculate_order_total(order)  # Calculate and add the total price
-
 
     return order
 
-
-# Generate random orders for each day with a random number of orders per day
+# Generate orders and store them in a list
 order_history = []
 for _ in range(num_orders):
-    num_daily_orders = random.randint(10, 20)  # Random number of orders per day (between 10 and 20)
-    for _ in range(num_daily_orders):
+    num_drinks = random.randint(1, 5)  # Random number of drinks per order (1-5)
+    for _ in range(num_drinks):
         order = generate_order()
         order_history.append(order)
 
+# Generate extra orders for the peak sales days
+for _ in range(peak_day1_orders):
+    order = generate_order()
+    order["Date"] = peak_day1.strftime("%Y-%m-%d")
+    order_history.append(order)
+
+for _ in range(peak_day2_orders):
+    order = generate_order()
+    order["Date"] = peak_day2.strftime("%Y-%m-%d")
+    order_history.append(order)
+
+# Sort orders by date
+order_history.sort(key=lambda x: datetime.strptime(x["Date"], "%Y-%m-%d"))
 
 # Calculate total sales
 total_sales = sum(order["Total Price"] for order in order_history)
 print("Total Sales:", total_sales)
-
-
-# Sort the order_history list by date
-order_history.sort(key=lambda x: datetime.strptime(x["Date"], "%Y-%m-%d"))
-
 
 # Write the order history to a CSV file
 csv_file = "order_history.csv"
@@ -118,7 +112,6 @@ with open(csv_file, mode='w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(fieldnames)
 
-
     for order in order_history:
         date = order["Date"]
         for drink in order["Items"]:
@@ -126,7 +119,3 @@ with open(csv_file, mode='w', newline='') as file:
             toppings = ", ".join(drink["Toppings"])
             total_price = order["Total Price"]  # Use the calculated total price
             writer.writerow([date, flavor, toppings, total_price])
-
-
-
-
