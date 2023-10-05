@@ -26,7 +26,7 @@ SELECT Toppings, COUNT(*) AS ToppingCount FROM OrderHistory WHERE Toppings IS NO
 
 -- Query 13: Realistic sales history(Req 2)
 SELECT HOUR(Date) AS Hour, COUNT(*) AS OrderCount, SUM([Total Price]) AS TotalOrderPrice FROM OrderHistory GROUP BY Hour;
-SELECT date_trunc('hour', Date::timestamp) AS HourStart,COUNT(*) AS OrderCount,SUM(price) AS TotalSales
+SELECT date_trunc('hour', Date::timestamp) AS HourStart,COUNT(*) AS OrderCount,SUM(totalprice) AS TotalSales
 FROM OrderHistory
 WHERE Date::timestamp >= NOW() - interval '1 day'
 GROUP BY HourStart
@@ -34,7 +34,7 @@ ORDER BY HourStart;
 
 
 --Query 14 2 Peak days(Req 3)
-SELECT Date, SUM(price) AS TotalSales FROM OrderHistory GROUP BY Date ORDER BY TotalSales DESC LIMIT 2;
+SELECT Date, SUM(totalprice) AS TotalSales FROM OrderHistory GROUP BY Date ORDER BY TotalSales DESC LIMIT 2;
 
 --Query 15  20 items in inventory(Req 4)
 SELECT COUNT(*) FROM Inventory;
