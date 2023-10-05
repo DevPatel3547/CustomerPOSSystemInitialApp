@@ -28,7 +28,8 @@ toppings = ["Creme Brulee", "Coconut Jelly", "Rainbow Jelly", "Crystal Boba", "E
 toppings_price = [0.80, 0.60, 0.60, 0.80, 0.60, 1.20, 0.60, 0.60, 0.80, 0.60, 0.60, 0.60]
 
 # Define the number of orders you want for the past 52 weeks (1 order per day)
-num_orders = 7 * 52
+num_days_order = 7 * 52
+num_sales_needed = 1000000
 
 # Define the start date 
 start_date = datetime.now() - timedelta(weeks=52)  # Adjust the week number as needed
@@ -51,14 +52,14 @@ def calculate_order_total(order):
         flavor = drink["Flavor"]
         toppings = drink["Toppings"]
 
-        flavor_index = boba_flavors.index(flavor)
-        flavor_price = boba_price[flavor_index]
+        flavor_index = boba_flavors.index(flavor) # finds index of flavor 
+        flavor_price = boba_price[flavor_index] # uses index of flavor to find the same index in price, the correspond
 
         topping_price = 0
         for topping in toppings:
             topping_index = toppings.index(topping)
             topping_price += toppings_price[topping_index]
-        total = flavor_price + topping_price
+        total = flavor_price + topping_price # total price of the individual order, drink and toppings
 
     return round(total, 2) ## rounds to 2 decimal points (for cents)
 
@@ -69,7 +70,7 @@ def generate_order():
         "Date": order_date.strftime("%Y-%m-%d"),
         "Items": []
     }
-    drink = {
+    drink = {# should not be in a for loop, one call of generate_order is one order, and external loop is needed
         "Flavor": random.choice(boba_flavors),
         "Toppings": random.sample(toppings, random.randint(0, 3))
     }
@@ -81,11 +82,15 @@ def generate_order():
 
 # Generate orders and store them in a list
 order_history = []
-for _ in range(num_orders):
-    num_drinks = random.randint(1, 5)  # Random number of drinks per order (1-5)
+for _ in range(num_days_order):# this needs to be in HERE because it used to we inside order_generate, it would generate prices for the wrong orders
+    total_sales_price = 0
+    num_drinks = random.randint(40, 50)  # Random number of drinks per day ordered, this will get us past the $1000000
     for _ in range(num_drinks):
         order = generate_order()
         order_history.append(order)
+        total_sales_price += order["Total Price"]
+
+
 
 # Generate extra orders for the peak sales days
 for _ in range(peak_day1_orders):
