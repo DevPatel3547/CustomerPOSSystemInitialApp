@@ -1,12 +1,9 @@
-## Run by typing: python generate_order_history.py   ##
-## Then look at order_history.csv file ##
-
 import random
 import csv
 from datetime import datetime, timedelta
 
 # Define a list of boba tea flavors
-boba_flavors = ["Brown Sugar Deerioca Creme Brulee Milk", "Brown Sugar Deerioca Milk", "Ube Creme Brulee Brown Sugar Deerioca Milk", 
+boba_flavors = ["Brown Sugar Deerioca Creme Brulee Milk", "Brown Sugar Deerioca Milk", "Ube Creme Brulee Brown Sugar Deerioca Milk",
                 "Ube Taro Brown Sugar Deerioca Milk", "Cocoa Brown Sugar Deerioca Milk", "Matcha Brown Sugar Deerioca Milk",
                 "Peach Oolong Tea", "Jasmine Green Tea", "Royal No. 9 Black Tea", "The Alley Assam Black Tea", "Mango LuLu",
                 "Strawberry Lulu", "Orange Lulu", "Iced Peach Oolong Grape LuLu", "Lychee LuLu", "Snow Velvet Grape LuLu",
@@ -28,22 +25,18 @@ toppings = ["Creme Brulee", "Coconut Jelly", "Rainbow Jelly", "Crystal Boba", "E
 toppings_price = [0.80, 0.60, 0.60, 0.80, 0.60, 1.20, 0.60, 0.60, 0.80, 0.60, 0.60, 0.60]
 
 # Define the number of orders you want for the past 52 weeks (1 order per day)
-num_days_order = 7 * 52
-num_sales_needed = 1000000
+num_orders = 7 * 52
 
-# Define the start date 
+# Define the start date
 start_date = datetime.now() - timedelta(weeks=52)  # Adjust the week number as needed
-
 
 # Add two peak sales days within the 52-week range
 peak_day1 = start_date + timedelta(weeks=1)  # Adjust the week number as needed
 peak_day2 = start_date + timedelta(weeks=40)  # Adjust the week number as needed
 
-
 # Define the number of extra orders for each peak day
 peak_day1_orders = 400  # Adjust the number of orders as needed
 peak_day2_orders = 400  # Adjust the number of orders as needed
-
 
 # Function to calculate the total price of an order
 def calculate_order_total(order):
@@ -52,16 +45,16 @@ def calculate_order_total(order):
         flavor = drink["Flavor"]
         toppings = drink["Toppings"]
 
-        flavor_index = boba_flavors.index(flavor) # finds index of flavor 
-        flavor_price = boba_price[flavor_index] # uses index of flavor to find the same index in price, the correspond
+        flavor_index = boba_flavors.index(flavor)
+        flavor_price = boba_price[flavor_index]
 
         topping_price = 0
         for topping in toppings:
             topping_index = toppings.index(topping)
             topping_price += toppings_price[topping_index]
-        total = flavor_price + topping_price # total price of the individual order, drink and toppings
+        total += flavor_price + topping_price
 
-    return round(total, 2) ## rounds to 2 decimal points (for cents)
+    return round(total, 2)  # Rounds to 2 decimal points (for cents)
 
 # Function to generate a random order
 def generate_order():
@@ -70,57 +63,61 @@ def generate_order():
         "Date": order_date.strftime("%Y-%m-%d"),
         "Items": []
     }
-    drink = {# should not be in a for loop, one call of generate_order is one order, and external loop is needed
-        "Flavor": random.choice(boba_flavors),
-        "Toppings": random.sample(toppings, random.randint(0, 3))
-    }
-    order["Items"].append(drink)
-    
+
+    num_drinks = random.randint(1, 5)  # Random number of drinks per order (1-5)
+    for _ in range(num_drinks):
+        drink = {
+            "Flavor": random.choice(boba_flavors),
+            "Toppings": random.sample(toppings, random.randint(0, 3))
+        }
+        order["Items"].append(drink)
+
     order["Total Price"] = calculate_order_total(order)  # Calculate and add the total price
 
     return order
 
-# Generate orders and store them in a list
+# Generate random orders for each day with a random number of orders per day
 order_history = []
-for _ in range(num_days_order):# this needs to be in HERE because it used to we inside order_generate, it would generate prices for the wrong orders
-    total_sales_price = 0
-    num_drinks = random.randint(40, 50)  # Random number of drinks per day ordered, this will get us past the $1000000
-    for _ in range(num_drinks):
+for _ in range(num_orders):
+    num_daily_orders = random.randint(10, 20)  # Random number of orders per day (between 10 and 20)
+    for _ in range(num_daily_orders):
         order = generate_order()
         order_history.append(order)
-        total_sales_price += order["Total Price"]
-
-
-
-# Generate extra orders for the peak sales days
-for _ in range(peak_day1_orders):
-    order = generate_order()
-    order["Date"] = peak_day1.strftime("%Y-%m-%d")
-    order_history.append(order)
-
-for _ in range(peak_day2_orders):
-    order = generate_order()
-    order["Date"] = peak_day2.strftime("%Y-%m-%d")
-    order_history.append(order)
-
-# Sort orders by date
-order_history.sort(key=lambda x: datetime.strptime(x["Date"], "%Y-%m-%d"))
 
 # Calculate total sales
 total_sales = sum(order["Total Price"] for order in order_history)
 print("Total Sales:", total_sales)
 
+# Sort the order_history list by date
+order_history.sort(key=lambda x: datetime.strptime(x["Date"], "%Y-%m-%d"))
+
 # Write the order history to a CSV file
 csv_file = "order_history.csv"
 with open(csv_file, mode='w', newline='') as file:
-    fieldnames = ["Date", "Flavor", "Toppings", "Total Price"]
+    fieldnames = ["Date", "Flavor", "Toppings", "Item Price", "Total Price"]
     writer = csv.writer(file)
     writer.writerow(fieldnames)
-
+    
+    # Write each order as a separate line with details
     for order in order_history:
         date = order["Date"]
         for drink in order["Items"]:
             flavor = drink["Flavor"]
             toppings = ", ".join(drink["Toppings"])
-            total_price = order["Total Price"]  # Use the calculated total price
-            writer.writerow([date, flavor, toppings, total_price])
+            item_price = calculate_order_total({"Items": [drink]})  # Calculate the total price for this drink
+            total_price = order["Total Price"]  # Total price of the entire order
+            writer.writerow([date, flavor, toppings, item_price, total_price])
+           
+
+           
+
+
+
+
+
+
+
+
+
+
+
