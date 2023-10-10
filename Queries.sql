@@ -34,7 +34,7 @@ ORDER BY HourStart;
 
 
 --Query 14 2 Peak days(Req 3)
-SELECT Date, SUM(totalprice) AS TotalSales FROM OrderHistory GROUP BY Date ORDER BY TotalSales DESC LIMIT 2;
+SELECT Date, SUM(totalprice) AS TotalSales FROM OrderHistory GROUP BY Date ORDER BY TotalSales DESC LIMIT 10;
 
 --Query 15  20 items in inventory(Req 4)
 SELECT COUNT(*) FROM Inventory;
