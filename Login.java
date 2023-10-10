@@ -67,9 +67,9 @@ public class Login extends JFrame {
                         dispose(); // close the Login Panel
 
                         if(user_temp.equals("manager")) {
-                            openManagerPanel();
+                            new Inventory().setVisible(true);
                         } else {
-                            openEmployeePanel();
+                            new DrinkMenu().setVisible(true);
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "Please re-enter your username or password!", "ERROR!", JOptionPane.ERROR_MESSAGE);
@@ -98,13 +98,13 @@ public class Login extends JFrame {
         return false;
     }
 
-    private void openManagerPanel() {
-        JOptionPane.showMessageDialog(null, "Inventory Stuff", "Inventory", JOptionPane.PLAIN_MESSAGE);
-    }
+    // private void openManagerPanel() {
+    //     JOptionPane.showMessageDialog(null, "Inventory Stuff", "Inventory", JOptionPane.PLAIN_MESSAGE);
+    // }
 
-    private void openEmployeePanel() {
-        JOptionPane.showMessageDialog(null, "List of Drinks", "Drinks", JOptionPane.PLAIN_MESSAGE);
-    }
+    // private void openEmployeePanel() {
+    //     JOptionPane.showMessageDialog(null, "List of Drinks", "Drinks", JOptionPane.PLAIN_MESSAGE);
+    // }
 
     public static void main(String args[]) {
         new Login().setVisible(true);
