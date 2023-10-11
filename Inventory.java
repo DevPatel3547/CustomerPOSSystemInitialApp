@@ -5,14 +5,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
-/**
- * The Inventory class represents a graphical user interface for managing inventory.
- *
- * @author Aviral
- */
 
-
-public class Inventory extends JFrame {
+class Inventory extends JFrame {
     
     Inventory() {
         setTitle("Inventory");
