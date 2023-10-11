@@ -8,22 +8,22 @@ class DrinkMenu extends JFrame {
     private CardLayout cardLayout;
     
     public DrinkMenu() {
-        setTitle("Drink Menu");
-        setSize(400, 200);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        // setTitle("Drink Menu");
+        // setSize(400, 200);
+        // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // setLocationRelativeTo(null);
 
-        JPanel cardPanel = new JPanel();
-        cardLayout = new CardLayout();
+        // JPanel cardPanel = new JPanel();
+        // cardLayout = new CardLayout();
 
-        JPanel flavorMenu = new JPanel();
-        JPanel customize = newJPanel();
-        JPanel cart = newJPanel();
+        // JPanel flavorMenu = new JPanel();
+        // JPanel customize = newJPanel();
+        // JPanel cart = newJPanel();
 
-        //--------Flavor Menu Here---------------
+        // //--------Flavor Menu Here---------------
 
-        JLabel flavorTitle = new JLabel("Choose Drink");
-        
+        // JLabel flavorTitle = new JLabel("Choose Drink");
+
 
 
 
