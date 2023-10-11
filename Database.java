@@ -28,20 +28,20 @@ public class Database {
         }
     }
 
-    // public static void main(String args[]) {
-    //     openJDBC();
+    public static void main(String args[]) {
+        openJDBC();
 
-    //     try {
-    //         Statement createStmt = conn.createStatement();
-    //         ResultSet result = conn.createStatement().executeQuery("SELECT COUNT(*) FROM OrderHistory WHERE Date = '2023-09-30';");
-    //         result.next();
-    //         System.out.println(result.getInt(1));
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //         System.err.println(e.getClass().getName()+": "+e.getMessage());
-    //         System.exit(0);
-    //     }
+        try {
+            Statement createStmt = conn.createStatement();
+            ResultSet result = conn.createStatement().executeQuery("SELECT COUNT(*) FROM OrderHistory WHERE Date = '2023-09-30';");
+            result.next();
+            System.out.println(result.getInt(1));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
 
-    //     closeJDBC();
-    // }
+        closeJDBC();
+    }
 }
