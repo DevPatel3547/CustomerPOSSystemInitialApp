@@ -12,10 +12,10 @@ class MostPopularTrends extends JFrame {
         setLocationRelativeTo(null);
 
         // Create and customize the manager panel UI here
-        JPanel drinkMenu_panel = new JPanel();
-        JLabel label = new JLabel("Welcome to the Drinks Menu (in progress)");
-        drinkMenu_panel.add(label);
+        JPanel popular_trends_panel = new JPanel();
+        JLabel label = new JLabel("Welcome to the Most Popular Trends Panel (in progress)");
+        popular_trends_panel.add(label);
 
-        add(drinkMenu_panel);
+        add(popular_trends_panel);
     }
 }
