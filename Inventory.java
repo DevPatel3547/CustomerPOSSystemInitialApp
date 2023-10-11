@@ -10,7 +10,7 @@ class Inventory extends JFrame {
     
     Inventory() {
         setTitle("Inventory");
-        setSize(500, 250);
+        setSize(600, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -58,13 +58,19 @@ class Inventory extends JFrame {
 
         JPanel inventory_box = new JPanel();
         inventory_box.setBorder(new LineBorder(Color.BLACK, 4));
-        Dimension boxSize = new Dimension(400, 100); // Adjust the size as needed
+        Dimension boxSize = new Dimension(400, 125);
         inventory_box.setPreferredSize(boxSize);
         constraints = new GridBagConstraints();
-        constraints.gridwidth = 4; // Spans all four columns
-        constraints.gridx = 0; // Starts from the first column
-        constraints.gridy = 3; // Below the labels
+        constraints.gridwidth = 4; 
+        constraints.gridx = 0;
+        constraints.gridy = 3;
         gbl.setConstraints(inventory_box, constraints);   
+
+        JButton buy_more_suppplies_button = new JButton("Buy More Supplies");
+        constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 4;
+        gbl.setConstraints(buy_more_suppplies_button, constraints);
         
         inventory_panel.add(back_to_login);
         inventory_panel.add(to_order_history_button);
@@ -72,6 +78,39 @@ class Inventory extends JFrame {
         inventory_panel.add(item_name_label);
         inventory_panel.add(item_quantity_label);
         inventory_panel.add(inventory_box);
+        inventory_panel.add(buy_more_suppplies_button);
+
+        back_to_login.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                    new Login().setVisible(true);
+                }
+            }
+        );
+
+        to_order_history_button.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                    new OrderHistory().setVisible(true);
+                }
+            }
+        );
+
+        buy_more_suppplies_button.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                    new BuyMoreSupplies().setVisible(true);
+                }
+            }
+        );
+
+
 
         add(inventory_panel);
     }
