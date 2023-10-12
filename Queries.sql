@@ -81,3 +81,6 @@ SELECT * FROM inventory WHERE Category = 'Disposable';
 
 -- Query 20 get category for add-ons
 SELECT * FROM inventory WHERE Category = 'Add-Ons';
+
+--Query 21 get category for milk and quantity is more than 0
+SELECT * FROM inventory WHERE Category = 'Milk' AND Quantity > 0;
