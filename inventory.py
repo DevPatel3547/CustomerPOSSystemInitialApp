@@ -5,16 +5,10 @@ import csv
 
 # Define a list of inventory items
 inventory_items = [
-    # Beverages
-    {"Name": "Milk Tea", "Category": "Beverage", "Quantity": 50, "Price": 4.50},
+    #Drink
+    {"Name": "Flavor Name", "Category": "Flavor", "Quantity": 500, "Price": 5.00},
 
-    # Ingredients
-    {"Name": "Matcha Powder", "Category": "Ingredient", "Quantity": 20, "Price": 10.00},
-    {"Name": "Taro Flavoring", "Category": "Ingredient", "Quantity": 15, "Price": 5.00},
-    {"Name": "Bubble Tea Syrup", "Category": "Ingredient", "Quantity": 4000, "Price": 1.00},
-    {"Name": "Bubble Tea Creamer", "Category": "Ingredient", "Quantity": 2000, "Price": 2.00},
-    {"Name": "Brown Sugar", "Category": "Ingredient", "Quantity": 400, "Price": 6.50},
-    {"Name": "Strawberries", "Category": "Ingredient", "Quantity": 100, "Price": 5.45},
+    # Custom Amounts
     {"Name": "Ice", "Category": "Ingredient", "Quantity": 500, "Price": 1.00},
     {"Name": "Sugar", "Category": "Ingredient", "Quantity": 500, "Price": 1.00},
     {"Name": "Boba", "Category": "Ingredient", "Quantity": 1000, "Price": 1.00},
@@ -24,15 +18,6 @@ inventory_items = [
     {"Name": "Soy Milk", "Category": "Milk", "Quantity": 70, "Price": 10.00},
     {"Name": "Oat Milk", "Category": "Milk", "Quantity": 70, "Price": 10.05},
 
-    # Toppings
-    {"Name": "Pearls", "Category": "Topping", "Quantity": 100, "Price": 0.50},
-    {"Name": "Jelly", "Category": "Topping", "Quantity": 200, "Price": 6.00},
-    {"Name": "Pudding", "Category": "Topping", "Quantity": 150, "Price": 5.50},
-    {"Name": "Grass Jelly", "Category": "Topping", "Quantity": 250, "Price": 2.00},
-    {"Name": "Red Bean", "Category": "Topping", "Quantity": 300, "Price": 3.23},
-    {"Name": "Lychee Fruits", "Category": "Topping", "Quantity": 90, "Price": 7.05},
-
-    #Note: need to look into pricing
     # Cup Size
     {"Name": "Large", "Category": "Cup", "Quantity": 500, "Price": 0.50},
     {"Name": "Regular", "Category": "Cup", "Quantity": 500, "Price": 0.40},
@@ -41,8 +26,8 @@ inventory_items = [
     {"Name": "Napkins", "Category": "Disposable", "Quantity": 5000, "Price": 0.02},
     {"Name": "Sanitation Wipes", "Category": "Disposable", "Quantity": 3000, "Price": 0.50},
     {"Name": "Trash Bags", "Category": "Disposable", "Quantity": 400, "Price": 0.70},
-
-    # Customization Options
+    {"Name": "Straws", "Category": "Disposable", "Quantity": 400, "Price": 0.70},
+    {"Name": "Paper Towels", "Category": "Disposable", "Quantity": 400, "Price": 0.70},
 
     #Add-Ons
     {"Name": "Coconut Jelly", "Category": "Add-Ons", "Quantity": 500, "Price": 0.60},
