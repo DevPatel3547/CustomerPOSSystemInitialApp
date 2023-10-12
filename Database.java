@@ -28,6 +28,20 @@ public class Database {
         }
     }
 
+    public static ResultSet getData(String cmd) {
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet result = conn.createStatement().executeQuery(cmd);
+            return result;
+        } catch (Exception e) {
+            System.out.println("ERROR:");
+            e.printStackTrace();
+            // System.err.println(e.getClass().getName()+": "+e.getMessage());
+            return null;
+            // System.exit(0);
+        }
+    }
+
     public static void main(String args[]) {
         openJDBC();
 
