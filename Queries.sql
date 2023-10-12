@@ -48,3 +48,36 @@ ORDER BY WeekStart DESC;
 
 -- Query 17 Find the Item and Quantity of a single row
 SELECT Name, Quantity FROM Inventory LIMIT 1 OFFSET 2;
+
+
+-- Query 18  looks at the menu table and gets every drink
+SELECT "Name of Item" AS Drink, "Cost of Item" AS Price, "Numbers Sold During Day" AS SoldDuringDay FROM menu WHERE Type = 'Drink';
+
+-- Query 19 gets the price of every drink
+SELECT "Name of Item" AS Drink, "Cost of Item" AS Price FROM menu WHERE Type = 'Drink';
+
+-- Query 20 get category for Beverages
+SELECT * FROM inventory WHERE Category = 'Beverage';
+
+
+-- Query 20 get category for ingredients
+SELECT * FROM inventory WHERE Category = 'Ingredient';
+
+
+-- Query 20 get category for milk
+SELECT * FROM inventory WHERE Category = 'Milk';
+
+
+-- Query 20 get category for toppings
+SELECT * FROM inventory WHERE Category = 'Topping';
+
+-- Query 20 get category for cups
+SELECT * FROM inventory WHERE Category = 'Cup';
+
+
+-- Query 20 get category for Disposables
+SELECT * FROM inventory WHERE Category = 'Disposable';
+
+
+-- Query 20 get category for add-ons
+SELECT * FROM inventory WHERE Category = 'Add-Ons';
