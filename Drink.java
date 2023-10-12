@@ -28,6 +28,12 @@ public class Drink {
         toppings = new ArrayList<String>();
     }
 
+    public Drink(String drinkName) {
+        name = drinkName;
+        size = milk = ice = sugar = boba = 0;
+        toppings = new ArrayList<String>();
+    }
+
     public String getName() {
         return name;
     }

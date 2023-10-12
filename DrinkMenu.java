@@ -17,6 +17,7 @@ class DrinkMenu extends JFrame {
     private JScrollPane scrollPane;
     private JPanel flavorsPanel;
     private Database database;
+    private String currDrinkName;
     
     public DrinkMenu() {
         database = new Database();
@@ -196,6 +197,7 @@ class DrinkMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 curCard = 2;
+                currDrinkName = flavor;
                 cardLayout.show(cardPanel, "" + curCard);
             }
         });
