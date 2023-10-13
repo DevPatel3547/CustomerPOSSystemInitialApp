@@ -142,27 +142,56 @@ class DrinkMenu extends JFrame {
 
         Vector<String> sizeOptions = new Vector<String>();
         Vector<String> milkOptions = new Vector<String>();
-        String iceOptions[] = {"No Ice", "Less Ice", "Regular Ice", "Extra Ice"};
-        String sugarOptions[] = {"No Sugar", "25% Sugar", "50% Sugar", "75% Sugar", "100% Sugar"};
-        String bobaOptions[] = {"No Boba", "Less Boba", "Default Amount of Boba", "Extra Boba (+$0.60)", "Extra Extra Boba (+$1.20)"};
+        Vector<String> iceOptions = new Vector<String>();       //{"No Ice", "Less Ice", "Regular Ice", "Extra Ice"};
+        Vector<String> sugarOptions = new Vector<String>();     //{"No Sugar", "25% Sugar", "50% Sugar", "75% Sugar", "100% Sugar"};
+        Vector<String> bobaOptions = new Vector<String>();      //{"No Boba", "Less Boba", "Default Amount of Boba", "Extra Boba (+$0.60)", "Extra Extra Boba (+$1.20)"};
         Vector<String> toppingOptions = new Vector<String>();
 
         try {
-            ResultSet query2 = database.getData("SELECT * FROM inventory WHERE category = 'Cup';");
+            ResultSet query2 = database.getData("SELECT * FROM inventory WHERE category = 'Cup' AND quantity > 0;");
             while (query2.next()) {
                 sizeOptions.add(query2.getString("name"));
                 // System.out.println(query2.getString("name"));
             }
-            query2 = database.getData("SELECT * FROM inventory WHERE category = 'Milk';");
+            query2 = database.getData("SELECT * FROM inventory WHERE category = 'Milk' AND quantity > 0;");
             while (query2.next()) {
                 milkOptions.add(query2.getString("name"));
                 // System.out.println(query2.getString("name"));
             }
-            query2 = database.getData("SELECT * FROM inventory WHERE category = 'Add-Ons';");
+            query2 = database.getData("SELECT * FROM inventory WHERE category = 'Add-Ons' AND quantity > 0;");
             while (query2.next()) {
                 toppingOptions.add(query2.getString("name"));
                 // System.out.println(query2.getString("name"));
             }
+
+            query2 = database.getData("SELECT * FROM inventory WHERE name = 'Ice';");
+            query2.next();
+            int iceAmt = Integer.parseInt(query2.getString("quantity"));
+            iceOptions.add("No Ice");
+            if (iceAmt >= 1) iceOptions.add("Less Ice");
+            if (iceAmt >= 2) iceOptions.add("Regular Ice");
+            if (iceAmt >= 3) iceOptions.add("Extra Ice");
+
+            query2 = database.getData("SELECT * FROM inventory WHERE name = 'Sugar';");
+            query2.next();
+            int sugarAmt = Integer.parseInt(query2.getString("quantity"));
+            sugarOptions.add("No Sugar");
+            if (sugarAmt >= 1) sugarOptions.add("25% Sugar");
+            if (sugarAmt >= 2) sugarOptions.add("50% Sugar");
+            if (sugarAmt >= 3) sugarOptions.add("75% Sugar");
+            if (sugarAmt >= 4) sugarOptions.add("100% Sugar");
+
+            query2 = database.getData("SELECT * FROM inventory WHERE name = 'Boba';");
+            query2.next();
+            int bobaAmt = Integer.parseInt(query2.getString("quantity"));
+            bobaOptions.add("No Boba");
+            if (bobaAmt >= 1) bobaOptions.add("Less Boba");
+            if (bobaAmt >= 2) bobaOptions.add("Default Amount of Boba");
+            if (bobaAmt >= 3) bobaOptions.add("Extra Boba (+$0.60)");
+            if (bobaAmt >= 4) bobaOptions.add("Extra Extra Boba (+$1.20)");
+
+
+
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
@@ -476,13 +505,15 @@ class DrinkMenu extends JFrame {
         JLabel price = new JLabel("$" + cost);
 
         JButton addButton = new JButton("Add");
+        // addButton.setEnabled(false);
 
         try {
             ResultSet query3 = database.getData("SELECT * FROM inventory WHERE Category = 'Flavor';");
-            while (query3.next()) {
-                if (query3.getString("quantity") == "0") {
-                    addButton.setEnabled(false);
-                }
+            query3.next();
+            // System.out.println("test: " + query3.getString("quantity"));
+            if (Integer.parseInt(query3.getString("quantity")) == 0) {
+                // System.out.println(query3.getString("quantity"));
+                addButton.setEnabled(false);
             }
         } catch (Exception e) {
             e.printStackTrace();
