@@ -84,3 +84,7 @@ SELECT * FROM inventory WHERE Category = 'Add-Ons';
 
 --Query 21 get category for milk and quantity is more than 0
 SELECT * FROM inventory WHERE Category = 'Milk' AND Quantity > 0;
+
+--Query 22 name is boba flavoring and quantity > 0
+SELECT * FROM inventory WHERE Name = 'Boba Flavoring' AND Quantity > 0;
+
