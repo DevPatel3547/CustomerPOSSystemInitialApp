@@ -94,3 +94,6 @@ UPDATE inventory SET Quantity = 0 WHERE "Name" = 'Boba Flavoring';
 
 -- Query 24
 INSERT INTO OrderHistory (date, flavor, toppings, itemprice, totalprice) VALUES ('2022-10-06', 'Taro Smoothie', 'Rainbow Jelly, Crystal Boba', 7.85, 7.85);
+
+--Query 25 updating quantity by adding a new quantity
+UPDATE inventory SET Quantity = Quantity + 100 WHERE Name = 'Boba Flavoring';
