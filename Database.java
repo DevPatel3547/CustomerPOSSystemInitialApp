@@ -42,6 +42,18 @@ public class Database {
         }
     }
 
+    public static void addData(String cmd) {
+        try {
+            Statement statement = conn.createStatement();
+            int count = conn.createStatement().executeUpdate(cmd);
+        } catch (Exception e) {
+            System.out.println("ERROR:");
+            e.printStackTrace();
+            // System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
+    }
+
     public static void main(String args[]) {
         openJDBC();
 
