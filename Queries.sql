@@ -91,3 +91,6 @@ SELECT * FROM inventory WHERE Name = 'Boba Flavoring' AND Quantity > 0;
 
 -- TEST QUERY 23
 UPDATE inventory SET Quantity = 0 WHERE "Name" = 'Boba Flavoring';
+
+-- Query 24
+INSERT INTO OrderHistory (date, flavor, toppings, itemprice, totalprice) VALUES ('2022-10-06', 'Taro Smoothie', 'Rainbow Jelly, Crystal Boba', 7.85, 7.85);
