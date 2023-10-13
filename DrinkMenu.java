@@ -18,13 +18,19 @@ class DrinkMenu extends JFrame {
     private JPanel flavorsPanel;
     private Database database;
     private String currDrinkName;
+    private Drink currDrink;
+    private int id;
+    private ArrayList<Drink> currCartList;
+    private JPanel currCartPanel;
     
     public DrinkMenu() {
+        currCartList = new ArrayList<Drink>();
+        id = 0;
         database = new Database();
         database.openJDBC();
         currentOrder = new ArrayList<Drink>();
         setTitle("Drink Menu");
-        setSize(800, 400);
+        setSize(1500, 1000);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -97,6 +103,7 @@ class DrinkMenu extends JFrame {
         // customize.setLayout(new BoxLayout(customize, BoxLayout.Y_AXIS));
         GridBagLayout gb2 = new GridBagLayout();
         customize.setLayout(gb2);
+        // customize.setSize(1500, 1000);
 
         JLabel customizeTitle = new JLabel("Customize Drink");
         GridBagConstraints constraints = new GridBagConstraints();
@@ -167,10 +174,25 @@ class DrinkMenu extends JFrame {
         JComboBox iceDropDown = new JComboBox(iceOptions);
         JComboBox sugarDropDown = new JComboBox(sugarOptions);
         JComboBox bobaDropDown = new JComboBox(bobaOptions);
-        JComboBox toppingsDropDown = new JComboBox(toppingOptions);
 
-        // JLabel sizeDivider = new JLabel("-----------------------------------------------------");
-        // customize.add(sizeDivider);
+
+        JPanel toppingsPanel = new JPanel();
+        toppingsPanel.setLayout(new BoxLayout(toppingsPanel, BoxLayout.Y_AXIS));
+        JScrollPane toppingScrollPane = new JScrollPane();
+        // toppingScrollPane.setSize(200, 400);
+        toppingScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
+
+        for (int i = 0; i < toppingOptions.size(); ++i) {
+            JCheckBox checkbox = new JCheckBox(toppingOptions.get(i));
+            checkBoxes.add(checkbox);
+            toppingsPanel.add(checkbox);
+        }
+
+        toppingScrollPane.setViewportView(toppingsPanel);
+
+
         JLabel sizeTitle = new JLabel("Choose Size:");
         constraints = new GridBagConstraints();
         constraints.gridx = 0;
@@ -247,40 +269,81 @@ class DrinkMenu extends JFrame {
         constraints = new GridBagConstraints();
         constraints.gridx = 1;
         constraints.gridy = 7;
-        gb2.setConstraints(toppingsDropDown, constraints);
-        customize.add(toppingsDropDown);
+        gb2.setConstraints(toppingScrollPane, constraints);
+        customize.add(toppingScrollPane);
 
         cardPanel.add(customize, "2");
 
 
-        //---------------------------------------
-
         //-------------Cart Here-----------------
 
-        GridBagLayout gb3 = new GridBagLayout();
-        cartPanel.setLayout(gb3);
-        cartPanel.setSize(400, 200);
+        JLabel cartTitle = new JLabel("Your Cart");
+        cartPanel.setLayout(new BorderLayout());
+        cartPanel.add(cartTitle, BorderLayout.NORTH);
 
-        JButton delete = new JButton("X");
-        constraints = new GridBagConstraints();
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        gb3.setConstraints(delete, constraints);
-        cartPanel.add(delete);
+        JButton backToFlavors = new JButton("Back");
+        cartPanel.add(backToFlavors, BorderLayout.WEST);
 
-        JLabel orderName = new JLabel("Order-Name ");
-        constraints = new GridBagConstraints();
-        constraints.gridx = 1;
-        constraints.gridy = 0;
-        gb3.setConstraints(orderName, constraints);
-        cartPanel.add(orderName);
+        JButton checkout = new JButton("Checkout");
+        cartPanel.add(checkout, BorderLayout.SOUTH);
 
-        JLabel orderPrice = new JLabel(" Order-Price");
-        constraints = new GridBagConstraints();
-        constraints.gridx = 2;
-        constraints.gridy = 0;
-        gb3.setConstraints(orderPrice, constraints);
-        cartPanel.add(orderPrice);
+        currCartPanel = new JPanel();
+        currCartPanel.setLayout(new BoxLayout(currCartPanel, BoxLayout.Y_AXIS));
+
+        // JScrollPane scrollCartPane = new JScrollPane(currCartPanel);
+        // scrollCartPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        ArrayList<Drink> tempList = new ArrayList<Drink>();
+        tempList = currCartList;
+        // currCartList.add(new Drink("test1"));
+        // currCartList.add(new Drink("test2"));
+        for (int i = 0; i < currCartList.size(); ++i) {
+            JPanel cartItem = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            JLabel cartItemName = new JLabel(currCartList.get(i).getName());
+            // JLabel cartItemPrice;
+            JButton removeItem = new JButton("X");
+            final int itemIndex = i;
+            removeItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    currCartList.remove(itemIndex);
+                    updateCartPanel();
+                }
+            });
+
+            cartItem.add(cartItemName);
+            cartItem.add(removeItem);
+
+            currCartPanel.add(cartItem);
+        }
+
+        // scrollCartPane.setViewportView(currCartPanel);
+
+        cartPanel.add(currCartPanel, BorderLayout.CENTER);
+
+
+
+
+        // JButton delete = new JButton("X");
+        // constraints = new GridBagConstraints();
+        // constraints.gridx = 0;
+        // constraints.gridy = 0;
+        // gb3.setConstraints(delete, constraints);
+        // cartPanel.add(delete);
+
+        // JLabel orderName = new JLabel("Order-Name ");
+        // constraints = new GridBagConstraints();
+        // constraints.gridx = 1;
+        // constraints.gridy = 0;
+        // gb3.setConstraints(orderName, constraints);
+        // cartPanel.add(orderName);
+
+        // JLabel orderPrice = new JLabel(" Order-Price");
+        // constraints = new GridBagConstraints();
+        // constraints.gridx = 2;
+        // constraints.gridy = 0;
+        // gb3.setConstraints(orderPrice, constraints);
+        // cartPanel.add(orderPrice);
 
 
 
@@ -305,8 +368,30 @@ class DrinkMenu extends JFrame {
             new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    // System.out.println(currCartList.get(0).getName());
                     curCard = 3;
+                    updateCartPanel();
                     cardLayout.show(cardPanel, "" + curCard);
+                }
+            }
+        );
+
+        backToFlavors.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    curCard = 1;
+                    cardLayout.show(cardPanel, "" + curCard);
+                }
+            }
+        );
+
+        checkout.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    currCartList.clear();
+                    updateCartPanel();
                 }
             }
         );
@@ -316,6 +401,65 @@ class DrinkMenu extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     curCard = 1;
+                    currDrink = new Drink(currDrinkName);
+                    currDrink.setId(id);
+                    id += 1;
+                    currDrink.setSize(sizeDropDown.getSelectedItem().toString());
+                    currDrink.setMilk(milkDropDown.getSelectedItem().toString());
+                    switch (iceDropDown.getSelectedItem().toString()) {
+                        case "No Ice":
+                            currDrink.setIce(0);
+                            break;
+                        case "Less Ice":
+                            currDrink.setIce(1);
+                            break;
+                        case "Regular Ice":
+                            currDrink.setIce(2);
+                            break;
+                        case "Extra Ice":
+                            currDrink.setIce(3);
+                            break;
+                    }
+                    switch (sugarDropDown.getSelectedItem().toString()) {
+                        case "No Sugar":
+                            currDrink.setSugar(0);
+                            break;
+                        case "25% Sugar":
+                            currDrink.setSugar(1);
+                            break;
+                        case "50% Sugar":
+                            currDrink.setSugar(2);
+                            break;
+                        case "75% Sugar":
+                            currDrink.setSugar(3);
+                            break;
+                        case "100% Sugar":
+                            currDrink.setSugar(4);
+                            break;
+                    }
+                    switch (bobaDropDown.getSelectedItem().toString()) {
+                        case "No Boba":
+                            currDrink.setBoba(0);
+                            break;
+                        case "Less Boba":
+                            currDrink.setBoba(1);
+                            break;
+                        case "Default Amount of Boba":
+                            currDrink.setBoba(2);
+                            break;
+                        case "Extra Boba (+$0.60)":
+                            currDrink.setBoba(3);
+                            break;
+                        case "Extra Extra Boba (+$1.20)":
+                            currDrink.setBoba(4);
+                            break;
+                    }
+                    for (int i = 0; i < checkBoxes.size(); ++i) {
+                        if (checkBoxes.get(i).isSelected()) {
+                            currDrink.addTopping(checkBoxes.get(i).getText());
+                        }
+                    }
+                    currCartList.add(currDrink);
                     cardLayout.show(cardPanel, "" + curCard);
                 }
             }
@@ -353,6 +497,28 @@ class DrinkMenu extends JFrame {
 
         flavorsPanel.add(flavorPanel);
 
+    }
+
+    private void updateCartPanel() {
+        currCartPanel.removeAll(); // Clear existing components
+        for (int i = 0; i < currCartList.size(); ++i) {
+            JPanel cartItem = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            JLabel cartItemName = new JLabel(currCartList.get(i).getName());
+            JButton removeItem = new JButton("X");
+            final int itemIndex = i;
+            removeItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    currCartList.remove(itemIndex);
+                    updateCartPanel(); // Update the cart panel after removal
+                }
+            });
+            cartItem.add(cartItemName);
+            cartItem.add(removeItem);
+            currCartPanel.add(cartItem);
+        }
+        currCartPanel.revalidate();
+        currCartPanel.repaint();
     }
 
     private void closeDatabase() {

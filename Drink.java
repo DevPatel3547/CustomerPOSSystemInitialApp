@@ -6,11 +6,12 @@ import java.io.*;
 import java.util.*;
 
 public class Drink {
+    private int id;
     private String name;
     //Size values: 0 for regular, 1 for large
-    private int size;
+    private String size;
     //Milk values: 0 for Organic, 1 for Soy, 2 for Oat
-    private int milk;
+    private String milk;
     //Ice values: 0 for no ice, 1 for less ice, 2 for regular ice, 3 for extra ice
     private int ice;
     //Sugar values: 0 for no sugar, 1 for 25% sugar, 2 for 50% sugar, 3 for 75% sugar, 4 for 100% sugar
@@ -23,15 +24,25 @@ public class Drink {
     private ArrayList<String> toppings; 
 
     public Drink() {
-        name = "";
-        size = milk = ice = sugar = boba = 0;
+        name = size = milk = "";
+        ice = sugar = boba = 0;
+        id = 0;
         toppings = new ArrayList<String>();
     }
 
     public Drink(String drinkName) {
         name = drinkName;
-        size = milk = ice = sugar = boba = 0;
+        size = milk = "";
+        ice = sugar = boba = 0;
+        id = 0;
         toppings = new ArrayList<String>();
+    }
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int i) {
+        id = i;
     }
 
     public String getName() {
@@ -41,17 +52,17 @@ public class Drink {
         name = s;
     }
 
-    public int getSize() {
+    public String getSize() {
         return size;
     }
-    public void setSize(int i) {
+    public void setSize(String i) {
         size = i;
     }
 
-    public int getMilk() {
+    public String getMilk() {
         return milk;
     }
-    public void setMilk(int i) {
+    public void setMilk(String i) {
         milk = i;
     }
     
