@@ -94,21 +94,161 @@ class DrinkMenu extends JFrame {
 
         //--------Drink Customization Here---------------
 
-        customize.setLayout(new BoxLayout(customize, BoxLayout.Y_AXIS));
-
-        JPanel customizeTitlePanel = new JPanel();
-        customizeTitlePanel.setLayout(new FlowLayout(FlowLayout.LEFT, 200, 0));
+        // customize.setLayout(new BoxLayout(customize, BoxLayout.Y_AXIS));
+        GridBagLayout gb2 = new GridBagLayout();
+        customize.setLayout(gb2);
 
         JLabel customizeTitle = new JLabel("Customize Drink");
-        customizeTitlePanel.add(customizeTitle);
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        gb2.setConstraints(customizeTitle, constraints);
+        customize.add(customizeTitle);
+
         JButton save = new JButton("Save");
-        customizeTitlePanel.add(save);
+        constraints = new GridBagConstraints();
+        constraints.gridx = 2;
+        constraints.gridy = 0;
+        gb2.setConstraints(save, constraints);
+        customize.add(save);
 
-        customize.add(customizeTitlePanel);
+        JLabel customizeDividerLeft = new JLabel("----------");
+        constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        gb2.setConstraints(customizeDividerLeft, constraints);
+        customize.add(customizeDividerLeft);
+        JLabel customizeDividerMid = new JLabel("----------");
+        constraints = new GridBagConstraints();
+        constraints.gridx = 1;
+        constraints.gridy = 1;
+        gb2.setConstraints(customizeDividerMid, constraints);
+        customize.add(customizeDividerMid);
+        JLabel customizeDividerRight = new JLabel("----------");
+        constraints = new GridBagConstraints();
+        constraints.gridx = 2;
+        constraints.gridy = 1;
+        gb2.setConstraints(customizeDividerRight, constraints);
+        customize.add(customizeDividerRight);
 
-        String arr[] = {"Drink Options Here", "Drink Option 1", "Drink Option 2", "Drink Option 3"};
-        JComboBox testOptions = new JComboBox(arr);
-        customize.add(testOptions);
+
+
+        Vector<String> sizeOptions = new Vector<String>();
+        Vector<String> milkOptions = new Vector<String>();
+        String iceOptions[] = {"No Ice", "Less Ice", "Regular Ice", "Extra Ice"};
+        String sugarOptions[] = {"No Sugar", "25% Sugar", "50% Sugar", "75% Sugar", "100% Sugar"};
+        String bobaOptions[] = {"No Boba", "Less Boba", "Default Amount of Boba", "Extra Boba (+$0.60)", "Extra Extra Boba (+$1.20)"};
+        Vector<String> toppingOptions = new Vector<String>();
+
+        try {
+            ResultSet query2 = database.getData("SELECT * FROM inventory WHERE category = 'Cup';");
+            while (query2.next()) {
+                sizeOptions.add(query2.getString("name"));
+                // System.out.println(query2.getString("name"));
+            }
+            query2 = database.getData("SELECT * FROM inventory WHERE category = 'Milk';");
+            while (query2.next()) {
+                milkOptions.add(query2.getString("name"));
+                // System.out.println(query2.getString("name"));
+            }
+            query2 = database.getData("SELECT * FROM inventory WHERE category = 'Add-Ons';");
+            while (query2.next()) {
+                toppingOptions.add(query2.getString("name"));
+                // System.out.println(query2.getString("name"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+
+
+        JComboBox sizeDropDown = new JComboBox(sizeOptions);
+        JComboBox milkDropDown = new JComboBox(milkOptions);
+        JComboBox iceDropDown = new JComboBox(iceOptions);
+        JComboBox sugarDropDown = new JComboBox(sugarOptions);
+        JComboBox bobaDropDown = new JComboBox(bobaOptions);
+        JComboBox toppingsDropDown = new JComboBox(toppingOptions);
+
+        // JLabel sizeDivider = new JLabel("-----------------------------------------------------");
+        // customize.add(sizeDivider);
+        JLabel sizeTitle = new JLabel("Choose Size:");
+        constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        gb2.setConstraints(sizeTitle, constraints);
+        customize.add(sizeTitle);
+
+        constraints = new GridBagConstraints();
+        constraints.gridx = 1;
+        constraints.gridy = 2;
+        gb2.setConstraints(sizeDropDown, constraints);
+        customize.add(sizeDropDown);
+        
+
+        JLabel milkTitle = new JLabel("Choose Milk:");
+        constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        gb2.setConstraints(milkTitle, constraints);
+        customize.add(milkTitle);
+
+        constraints = new GridBagConstraints();
+        constraints.gridx = 1;
+        constraints.gridy = 3;
+        gb2.setConstraints(milkDropDown, constraints);
+        customize.add(milkDropDown);
+
+        JLabel iceTitle = new JLabel("Choose Ice Level:");
+        constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 4;
+        gb2.setConstraints(iceTitle, constraints);
+        customize.add(iceTitle);
+
+        constraints = new GridBagConstraints();
+        constraints.gridx = 1;
+        constraints.gridy = 4;
+        gb2.setConstraints(iceDropDown, constraints);
+        customize.add(iceDropDown);
+
+        JLabel sugarTitle = new JLabel("Choose Sugar Level:");
+        constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 5;
+        gb2.setConstraints(sugarTitle, constraints);
+        customize.add(sugarTitle);
+
+        constraints = new GridBagConstraints();
+        constraints.gridx = 1;
+        constraints.gridy = 5;
+        gb2.setConstraints(sugarDropDown, constraints);
+        customize.add(sugarDropDown);
+
+        JLabel bobaTitle = new JLabel("Choose Boba Level:");
+        constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 6;
+        gb2.setConstraints(bobaTitle, constraints);
+        customize.add(bobaTitle);
+
+        constraints = new GridBagConstraints();
+        constraints.gridx = 1;
+        constraints.gridy = 6;
+        gb2.setConstraints(bobaDropDown, constraints);
+        customize.add(bobaDropDown);
+
+        JLabel toppingsTitle = new JLabel("Choose Toppings:");
+        constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.gridy = 7;
+        gb2.setConstraints(toppingsTitle, constraints);
+        customize.add(toppingsTitle);
+
+        constraints = new GridBagConstraints();
+        constraints.gridx = 1;
+        constraints.gridy = 7;
+        gb2.setConstraints(toppingsDropDown, constraints);
+        customize.add(toppingsDropDown);
 
         cardPanel.add(customize, "2");
 
@@ -122,7 +262,7 @@ class DrinkMenu extends JFrame {
         cartPanel.setSize(400, 200);
 
         JButton delete = new JButton("X");
-        GridBagConstraints constraints = new GridBagConstraints();
+        constraints = new GridBagConstraints();
         constraints.gridx = 0;
         constraints.gridy = 0;
         gb3.setConstraints(delete, constraints);
@@ -189,7 +329,7 @@ class DrinkMenu extends JFrame {
 
         JLabel name = new JLabel(flavor);
 
-        JLabel price = new JLabel("" + cost);
+        JLabel price = new JLabel("$" + cost);
 
         JButton addButton = new JButton("Add");
 
@@ -202,8 +342,13 @@ class DrinkMenu extends JFrame {
             }
         });
 
+        JLabel divider1 = new JLabel("---");
+        JLabel divider2 = new JLabel("---");
+
         flavorPanel.add(name);
+        flavorPanel.add(divider1);
         flavorPanel.add(price);
+        flavorPanel.add(divider2);
         flavorPanel.add(addButton);
 
         flavorsPanel.add(flavorPanel);
