@@ -73,16 +73,6 @@ class Inventory extends JFrame {
         constraints.gridy = 2;
         gbl.setConstraints(item_quantity_label, constraints);
 
-        // JPanel inventory_box = new JPanel();
-        // inventory_box.setBorder(new LineBorder(Color.BLACK, 4));
-        // Dimension boxSize = new Dimension(400, 125);
-        // inventory_box.setPreferredSize(boxSize);
-        // constraints = new GridBagConstraints();
-        // constraints.gridwidth = 4; 
-        // constraints.gridx = 0;
-        // constraints.gridy = 3;
-        // gbl.setConstraints(inventory_box, constraints);
-        
         DefaultListModel<String> listModel = new DefaultListModel<>();
         JList<String> inventoryList = new JList<>(listModel);
 
@@ -126,25 +116,34 @@ class Inventory extends JFrame {
         constraints.gridy = 3;
         gbl.setConstraints(scrollPane, constraints);
 
-        JButton buy_more_suppplies_button = new JButton("Buy More Supplies");
+        JButton buy_more_supplies_button = new JButton("Buy More Supplies");
         constraints = new GridBagConstraints();
         constraints.gridx = 0;
         constraints.gridy = 4;
         constraints.insets = new Insets(5, 0, 0, 0);
-        gbl.setConstraints(buy_more_suppplies_button, constraints);
+        gbl.setConstraints(buy_more_supplies_button, constraints);
+
+        JButton edit_menu_button = new JButton("Edit Menu");
+        constraints = new GridBagConstraints();
+        constraints.gridx = 3;
+        constraints.gridy = 4;
+        constraints.insets = new Insets(5, 0, 0, 0);
+        gbl.setConstraints(edit_menu_button, constraints);
         
         inventory_panel.add(logout_button);
         inventory_panel.add(to_order_history_button);
         inventory_panel.add(current_invetory_label);
         inventory_panel.add(item_name_label);
         inventory_panel.add(item_quantity_label);
-        inventory_panel.add(buy_more_suppplies_button);
+        inventory_panel.add(buy_more_supplies_button);
         inventory_panel.add(scrollPane);
+        inventory_panel.add(edit_menu_button);
 
         logout_button.addActionListener(
             new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    database.closeJDBC();
                     dispose();
                     new Login().setVisible(true);
                 }
@@ -155,23 +154,34 @@ class Inventory extends JFrame {
             new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    database.closeJDBC();
                     dispose();
                     new OrderHistory().setVisible(true);
                 }
             }
         );
 
-        buy_more_suppplies_button.addActionListener(
+        buy_more_supplies_button.addActionListener(
             new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    database.closeJDBC();
                     dispose();
                     new BuyMoreSupplies().setVisible(true);
                 }
             }
         );
 
-
+        edit_menu_button.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    database.closeJDBC();
+                    dispose();
+                    new EditMenu().setVisible(true);
+                }
+            }
+        );
 
         add(inventory_panel);
     }
