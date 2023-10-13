@@ -51,10 +51,10 @@ SELECT Name, Quantity FROM Inventory LIMIT 1 OFFSET 2;
 
 
 -- Query 18  looks at the menu table and gets every drink
-SELECT "Name of Item" AS Drink, "Cost of Item" AS Price, "Numbers Sold During Day" AS SoldDuringDay FROM menu WHERE Type = 'Drink';
+SELECT "nameofitem" AS Drink, "cost" AS Price, "numbersoldtoday" AS SoldDuringDay FROM menu WHERE Type = 'Drink';
 
 -- Query 19 gets the price of every drink
-SELECT "Name of Item" AS Drink, "Cost of Item" AS Price FROM menu WHERE Type = 'Drink';
+SELECT "nameofitem" AS Drink, "cost" AS Price FROM menu WHERE Type = 'Drink';
 
 -- Query 20 get category for Beverages
 SELECT * FROM inventory WHERE Category = 'Beverage';
@@ -88,3 +88,6 @@ SELECT * FROM inventory WHERE Category = 'Milk' AND Quantity > 0;
 --Query 22 name is boba flavoring and quantity > 0
 SELECT * FROM inventory WHERE Name = 'Boba Flavoring' AND Quantity > 0;
 
+
+-- TEST QUERY 23
+UPDATE inventory SET Quantity = 0 WHERE "Name" = 'Boba Flavoring';
