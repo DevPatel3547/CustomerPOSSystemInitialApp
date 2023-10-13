@@ -1,28 +1,32 @@
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
-// import java.awt.event.FocusEvent;
-// import java.awt.event.FocusListener;
+import java.awt.event.*;
+import javax.swing.JFrame;
+import javax.swing.*;
+import java.util.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.*;
-
+import javax.naming.spi.DirStateFactory.Result;
 
 class BuyMoreSupplies extends JFrame {
+    //private int curCard = 1;
+    private CardLayout cardLayout;
+    private ArrayList<String> currentCartList;
+    private JPanel cardPanel;
+    private JPanel buyMoreMenu;
+    private JScrollPane scrollPane;
+    private JPanel itemsPanel;
     private Database database;
     
-    BuyMoreSupplies() {
-        setTitle("Buy More Supplies");
-        setSize(600, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setResizable(false);
-
+    public BuyMoreSupplies() {
+        database = new Database();
         database = new Database();
         database.openJDBC();
+        currentCartList = new ArrayList<String>();
+        setTitle("Buy More Supplies");
+        setSize(800, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
         addWindowListener(new WindowAdapter() {
             @Override
@@ -32,144 +36,78 @@ class BuyMoreSupplies extends JFrame {
             }
         });
 
-        // Create a panel and set its layout to GridBagLayout
-        JPanel buy_more_supplies_panel = new JPanel();
-        GridBagLayout gbl = new GridBagLayout();
-        GridBagConstraints constraints;
-        buy_more_supplies_panel.setLayout(gbl);
+        cardPanel = new JPanel();
+        cardLayout = new CardLayout();
+        cardPanel.setLayout(cardLayout);
+
+        buyMoreMenu = new JPanel();
+        //JPanel cartPanel = new JPanel();
+
+        // --------- Beginning of the Items Panel ---------
+        JLabel buy_more_supplies_label = new JLabel("Add items you wish to purchase to your cart");
+        buyMoreMenu.setLayout(new BorderLayout());
+        buyMoreMenu.add(buy_more_supplies_label, BorderLayout.NORTH);
 
         JButton back_to_inventory = new JButton("Back to Inventory");
-        constraints = new GridBagConstraints();
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        constraints.insets = new Insets(0, 0, 30, 50);
-        gbl.setConstraints(back_to_inventory, constraints);
+        buyMoreMenu.add(back_to_inventory, BorderLayout.WEST);
 
-        JButton to_supplies_cart_button = new JButton("Go to Cart");
-        constraints = new GridBagConstraints();
-        constraints.gridx = 3;
-        constraints.gridy = 0;
-        constraints.insets = new Insets(0, 230, 30, 0);
-        gbl.setConstraints(to_supplies_cart_button, constraints);
+        JButton cart = new JButton("Cart");
+        buyMoreMenu.add(cart, BorderLayout.SOUTH);
 
-        // JTextField search_bar = new JTextField(20);
-        // search_bar.setText("Search Bar"); 
-        // constraints = new GridBagConstraints();
-        // constraints.gridwidth = 2;
-        // constraints.gridx = 1;
-        // constraints.gridy = 1;
-        // gbl.setConstraints(search_bar, constraints);
-        // search_bar.addFocusListener(new FocusListener() {
-        //     @Override
-        //     public void focusGained(FocusEvent e) {
-        //         if (search_bar.getText().equals("Search Bar")) {
-        //             search_bar.setText(""); // Clear the text when clicked on
-        //         }
-        //     }
+        itemsPanel = new JPanel();
+        itemsPanel.setLayout(new BoxLayout(itemsPanel, BoxLayout.Y_AXIS));
 
-        //     @Override
-        //     public void focusLost(FocusEvent e) {
-        //         if (search_bar.getText().isEmpty()) {
-        //             search_bar.setText("Search Bar"); // Restore the default text if empty
-        //         }
-        //     }
-        // });
+        scrollPane = new JScrollPane(itemsPanel);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-        JLabel item_name_label = new JLabel("Name");
-        constraints = new GridBagConstraints();
-        constraints.gridx = 0;
-        constraints.gridy = 2;
-        constraints.insets = new Insets(0, 55, 0, 0);
-        gbl.setConstraints(item_name_label, constraints);
-        
-        JLabel item_price_label = new JLabel("Price ($)");
-        constraints = new GridBagConstraints();
-        constraints.gridx = 3;
-        constraints.gridy = 2;
-        constraints.insets = new Insets(0, 140, 0, 0);
-        gbl.setConstraints(item_price_label, constraints);
-
-        // JPanel shopping_box = new JPanel();
-        // shopping_box.setBorder(new LineBorder(Color.BLACK, 4));
-        // Dimension boxSize = new Dimension(400, 125);
-        // shopping_box.setPreferredSize(boxSize);
-        // constraints = new GridBagConstraints();
-        // constraints.gridwidth = 4; 
-        // constraints.gridx = 0;
-        // constraints.gridy = 3;
-        // gbl.setConstraints(shopping_box, constraints); 
-        
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-        JList<String> inventoryList = new JList<>(listModel);
-
+        ArrayList<String> item_names = new ArrayList<String>();
+        ArrayList<Double> item_prices = new ArrayList<Double>();
         try {
             String sql = "SELECT name, price FROM inventory;";
-            ResultSet resultSet = database.getData(sql);
+            ResultSet query = database.getData(sql);
 
-            while (resultSet.next()) {
-                String name = resultSet.getString("name");
-                double price = resultSet.getDouble("price");
-
-                // Format the name and quantity and add it to the list model
-                String formattedEntry = String.format("%-70s %5.2f", name, price);
-                listModel.addElement(formattedEntry);
+            while (query.next()) {
+                item_names.add(query.getString("name"));
+                item_prices.add(query.getDouble("price"));
             }
-
-            resultSet.close();
-        } catch (SQLException e) {
-            System.out.println("Error: Could not load shopping menu");
+        } catch (Exception e) {
+            System.out.println("ERROR: Could not load supply purchase menu");
             e.printStackTrace();
             System.exit(0);
         }
 
-        // Create a custom cell renderer for right-aligning the quantities
-        inventoryList.setCellRenderer(new DefaultListCellRenderer() {
+        for (int i = 0; i < item_names.size(); ++i) {
+            createItemsList(item_names.get(i), item_prices.get(i), i);
+        }
+
+        buyMoreMenu.add(scrollPane, BorderLayout.CENTER);
+        cardPanel.add(buyMoreMenu, "1");
+
+        add(cardPanel);
+    }
+
+    private void createItemsList(String item_name, double item_price, int index) {
+        JPanel itemPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+        JLabel name = new JLabel(item_name);
+
+        JLabel price = new JLabel("" + item_price);
+
+        JButton addButton = new JButton("Add");
+
+        addButton.addActionListener(new ActionListener() {
             @Override
-            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-                Component component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                setHorizontalAlignment(SwingConstants.RIGHT);
-                return component;
+            public void actionPerformed(ActionEvent e) {
+                currentCartList.add(item_name);
             }
         });
 
-        JScrollPane scrollPane = new JScrollPane(inventoryList);
-        scrollPane.setPreferredSize(new Dimension(400, 125));
+        itemPanel.add(name);
+        itemPanel.add(price);
+        itemPanel.add(addButton);
 
-        constraints = new GridBagConstraints();
-        constraints.gridwidth = 4;
-        constraints.gridx = 0;
-        constraints.gridy = 3;
-        gbl.setConstraints(scrollPane, constraints);
+        itemsPanel.add(itemPanel);
 
-        // Adding each component to the panel
-        buy_more_supplies_panel.add(back_to_inventory);
-        buy_more_supplies_panel.add(to_supplies_cart_button);
-        //buy_more_supplies_panel.add(search_bar);
-        buy_more_supplies_panel.add(item_name_label);
-        buy_more_supplies_panel.add(item_price_label);
-        buy_more_supplies_panel.add(scrollPane);
-
-        back_to_inventory.addActionListener(
-            new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dispose();
-                    new Inventory().setVisible(true);
-                }
-            }
-        );
-
-        to_supplies_cart_button.addActionListener(
-            new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dispose();
-                    new SuppliesCart().setVisible(true);
-                }
-            }
-        );
-
-        add(buy_more_supplies_panel);
     }
 
     private void closeDatabase() {
