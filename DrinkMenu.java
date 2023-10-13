@@ -477,6 +477,18 @@ class DrinkMenu extends JFrame {
 
         JButton addButton = new JButton("Add");
 
+        try {
+            ResultSet query3 = database.getData("SELECT * FROM inventory WHERE Category = 'Flavor';");
+            while (query3.next()) {
+                if (query3.getString("quantity") == "0") {
+                    addButton.setEnabled(false);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
