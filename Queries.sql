@@ -96,7 +96,7 @@ UPDATE inventory SET Quantity = 0 WHERE "Name" = 'Boba Flavoring';
 INSERT INTO orderhistory (date, flavor, toppings, itemprice, totalprice) VALUES ('2022-10-07', 'Taro Smoothie', 'Rainbow Jelly', 7.85, 7.85);
 
 -- Query 25 Sales Report: Given a time window, display the sales by menu item from the order history.(date range can be changed)
-SELECT "flavor" AS "Menu Item", SUM("totalprice") AS "Total Sales"
+SELECT "flavor" , SUM("totalprice") AS "Total Sales"
 FROM "orderhistory"
 WHERE "date" BETWEEN '2022-10-01' AND '2022-10-31' 
 GROUP BY "flavor"
@@ -114,13 +114,13 @@ WITH sales_data AS (
         CAST(date AS timestamp) BETWEEN '2023-01-01 00:00:00' AND NOW()
 )
 SELECT
-    i.name AS item_name,
-    i.quantity,
+    name AS item_name,
+    quantity,
     COALESCE(sd.sold_count, 0) AS sold_count
 FROM
-    inventory i
+    inventory 
 LEFT JOIN
-    sales_data sd ON i.name = sd.sold_item
+    sales_data sd ON name = sd.sold_item
 WHERE
-    COALESCE(sd.sold_count, 0) < 0.1 * i.quantity;
+    COALESCE(sd.sold_count, 0) < 0.1 * quantity;
 
