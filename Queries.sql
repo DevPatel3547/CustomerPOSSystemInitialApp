@@ -1,4 +1,4 @@
-@@ -1,41 +1,46 @@
+@ -1,41 +1,46 @@
 -- Query 1: Retrieve all records from OrderHistory
 SELECT * FROM OrderHistory;
 -- Query 2: Count the total number of orders
@@ -129,3 +129,14 @@ WHERE
 
 SELECT * FROM inventory WHERE quantity < 100; 
 
+
+-- Query 28 Seasonal Menu items
+--inventory update
+INSERT INTO inventory (Category, Name, Quantity, Price) VALUES ('Ingredient', 'Bumbo Flavor Syrup', 50, 8.99), ('Ingredient', 'Special Bumbo Toppings', 30, 6.99);
+-- menu update
+INSERT INTO menu ("nameofitem", Type, "cost", "numbersoldtoday") VALUES ('Bumbo Christmas Blast', 'Drink', 7.99, 0);
+-- set quantity in inventory
+-- test query to find seasonal item
+SELECT "nameofitem", "type", "cost", "numbersoldtoday"
+FROM menu
+WHERE "nameofitem" = 'Bumbo Christmas Blast';
