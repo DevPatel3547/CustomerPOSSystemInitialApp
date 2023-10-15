@@ -124,3 +124,8 @@ LEFT JOIN
 WHERE
     COALESCE(sd.sold_count, 0) < 0.1 * quantity;
 
+
+-- Query 27 restock report (let 100 be the restock quantity)
+
+SELECT * FROM inventory WHERE quantity < 100; 
+
