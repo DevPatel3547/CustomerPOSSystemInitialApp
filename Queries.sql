@@ -102,4 +102,25 @@ WHERE "date" BETWEEN '2022-10-01' AND '2022-10-31'
 GROUP BY "flavor"
 ORDER BY "Total Sales" DESC;
 
+-- Query 26 Excess Report: Given a timestamp, display the list of inventory items that only sold less than 10% of their inventory between the timestamp and the current time, assuming no restocks have happened during the window. 
+
+WITH sales_data AS (
+    SELECT
+        unnest(string_to_array(toppings, ', ')) AS sold_item,
+        COUNT(*) OVER(PARTITION BY unnest(string_to_array(toppings, ', '))) AS sold_count
+    FROM
+        orderhistory
+    WHERE
+        CAST(date AS timestamp) BETWEEN '2023-01-01 00:00:00' AND NOW()
+)
+SELECT
+    i.name AS item_name,
+    i.quantity,
+    COALESCE(sd.sold_count, 0) AS sold_count
+FROM
+    inventory i
+LEFT JOIN
+    sales_data sd ON i.name = sd.sold_item
+WHERE
+    COALESCE(sd.sold_count, 0) < 0.1 * i.quantity;
 
