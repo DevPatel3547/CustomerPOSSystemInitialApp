@@ -94,3 +94,12 @@ UPDATE inventory SET Quantity = 0 WHERE "Name" = 'Boba Flavoring';
 
 -- Query 24
 INSERT INTO orderhistory (date, flavor, toppings, itemprice, totalprice) VALUES ('2022-10-07', 'Taro Smoothie', 'Rainbow Jelly', 7.85, 7.85);
+
+-- Query 25 Sales Report: Given a time window, display the sales by menu item from the order history.(date range can be changed)
+SELECT "flavor" AS "Menu Item", SUM("totalprice") AS "Total Sales"
+FROM "orderhistory"
+WHERE "date" BETWEEN '2022-10-01' AND '2022-10-31' 
+GROUP BY "flavor"
+ORDER BY "Total Sales" DESC;
+
+
