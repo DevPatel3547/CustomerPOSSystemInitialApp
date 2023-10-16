@@ -140,3 +140,23 @@ INSERT INTO menu ("nameofitem", Type, "cost", "numbersoldtoday") VALUES ('Bumbo 
 SELECT "nameofitem", "type", "cost", "numbersoldtoday"
 FROM menu
 WHERE "nameofitem" = 'Bumbo Christmas Blast';
+
+--Query 29 What Sales
+WITH order_items AS (
+    SELECT
+        "date",
+        "flavor" AS flavor
+    FROM orderhistory
+    WHERE "date" BETWEEN '2023-10-04' AND '2023-10-05'  
+),
+paired_items AS (
+    SELECT
+        a.flavor AS item1,
+        b.flavor AS item2
+    FROM order_items a
+    JOIN order_items b ON a."date" = b."date" AND a.flavor < b.flavor
+)
+SELECT item1, item2, COUNT(*) AS pair_count
+FROM paired_items
+GROUP BY item1, item2
+ORDER BY pair_count DESC;
