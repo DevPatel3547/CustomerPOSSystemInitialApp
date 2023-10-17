@@ -1,21 +1,21 @@
-Name,Category,Quantity,Price,Min_Quantity,threshold,needRestock
-Flavor Name,Flavor,500,5.0,No,50,No
-Ice,Ingredient,500,1.0,No,50,No
-Sugar,Ingredient,500,1.0,No,50,No
-Boba,Ingredient,1000,1.0,No,100,No
-Organic Milk,Milk,70,9.05,No,7,No
-Soy Milk,Milk,70,10.0,No,7,No
-Oat Milk,Milk,70,10.05,No,7,No
-Large,Cup,500,0.5,No,50,No
-Regular,Cup,500,0.4,No,50,No
-Napkins,Disposable,5000,0.02,No,500,No
-Sanitation Wipes,Disposable,3000,0.5,No,300,No
-Trash Bags,Disposable,400,0.7,No,40,No
-Straws,Disposable,400,0.7,No,40,No
-Paper Towels,Disposable,400,0.7,No,40,No
-Coconut Jelly,Add-Ons,500,0.6,No,50,No
-Snow Velvet,Add-Ons,500,0.6,No,50,No
-Rainbow Jelly,Add-Ons,500,0.6,No,50,No
-Brown Sugar Boba,Add-Ons,500,0.8,No,50,No
-Crystal Boba,Add-Ons,500,0.8,No,50,No
-Creme Brulee,Add-Ons,500,0.8,No,50,No
+Name,Category,Quantity,Price,min,threshold,needRestock
+Flavor Name,Flavor,500,5.0,10,50,No
+Ice,Ingredient,500,1.0,10,50,No
+Sugar,Ingredient,500,1.0,10,50,No
+Boba,Ingredient,1000,1.0,10,100,No
+Organic Milk,Milk,70,9.05,10,7,No
+Soy Milk,Milk,70,10.0,10,7,No
+Oat Milk,Milk,70,10.05,10,7,No
+Large,Cup,500,0.5,10,50,No
+Regular,Cup,500,0.4,10,50,No
+Napkins,Disposable,5000,0.02,10,500,No
+Sanitation Wipes,Disposable,3000,0.5,10,300,No
+Trash Bags,Disposable,400,0.7,10,40,No
+Straws,Disposable,400,0.7,10,40,No
+Paper Towels,Disposable,400,0.7,10,40,No
+Coconut Jelly,Add-Ons,500,0.6,10,50,No
+Snow Velvet,Add-Ons,500,0.6,10,50,No
+Rainbow Jelly,Add-Ons,500,0.6,10,50,No
+Brown Sugar Boba,Add-Ons,500,0.8,10,50,No
+Crystal Boba,Add-Ons,500,0.8,10,50,No
+Creme Brulee,Add-Ons,500,0.8,10,50,No
