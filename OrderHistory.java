@@ -55,7 +55,7 @@ class OrderHistory extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     dispose();
-                    new PopularCombination().setVisible(true);
+                    new DateSelectionFrame().setVisible(true);
                 }
             }
         );

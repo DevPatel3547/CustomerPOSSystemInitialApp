@@ -6,7 +6,7 @@ class PopularCombination extends JFrame {
     private Database database;
     private JTable table;
 
-    public PopularCombination() {
+    public PopularCombination(String startDate, String endDate) {
         setTitle("Popular Combinations");
         setSize(800, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -17,7 +17,7 @@ class PopularCombination extends JFrame {
         database.openJDBC();
 
         String[] columnNames = {"Flavor", "Topping", "Frequency"};
-        Object[][] data = fetchDataFromDatabase();
+        Object[][] data = fetchDataFromDatabase(startDate, endDate);
         table = new JTable(data, columnNames);
 
         JScrollPane scrollPane = new JScrollPane(table);
@@ -39,13 +39,13 @@ class PopularCombination extends JFrame {
         add(mainPanel);
     }
 
-    private Object[][] fetchDataFromDatabase() {
+    private Object[][] fetchDataFromDatabase(String startDate, String endDate) {
         try {
             String sql = "WITH ToppingsExploded AS (\r\n" + //
                     "    -- Exploding the toppings into individual rows\r\n" + //
                     "    SELECT date, flavor, UNNEST(STRING_TO_ARRAY(toppings, ', ')) AS topping\r\n" + //
                     "    FROM orderhistory\r\n" + //
-                    "    WHERE date BETWEEN '2022-10-05' AND '2022-10-06'  -- Change dates as needed\r\n" + //
+                    "    WHERE date BETWEEN '\"" + startDate + "\"' AND '\" "+ endDate + "\"' \r\n" + //
                     ")\r\n" + //
                     "\r\n" + //
                     "SELECT\r\n" + //
@@ -56,7 +56,7 @@ class PopularCombination extends JFrame {
                     "WHERE topping <> ''  -- filtering out empty toppings\r\n" + //
                     "GROUP BY flavor, topping\r\n" + //
                     "ORDER BY frequency DESC;\r\n" + //
-                    "";;  // Your SQL query from earlier goes here
+                    "";  // Your SQL query from earlier goes here
             ResultSet resultSet = database.getData(sql);
 
             // Convert ResultSet to Object[][]
@@ -82,7 +82,7 @@ class PopularCombination extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            new PopularCombination().setVisible(true);
-        });
+                new PopularCombination("2022-10-05", "2022-10-06").setVisible(true);  // Example dates
+            });
     }
 }
