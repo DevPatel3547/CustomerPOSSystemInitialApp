@@ -52,6 +52,13 @@ class MostPopularTrends extends JFrame {
         constraints.insets = new Insets(0, 30, 5, 0);
         gbl.setConstraints(to_sales_report_button, constraints);
 
+        JButton to_excess_report_button = new JButton("Enter Excess Report");
+        constraints = new GridBagConstraints();
+        constraints.gridx = 4;
+        constraints.gridy = 0;
+        constraints.insets = new Insets(0, 30, 5, 0);
+        gbl.setConstraints(to_excess_report_button, constraints);
+
 
         DefaultListModel<String> listModel = new DefaultListModel<>();// for the scroll data
         JList<String> dateList = new JList<>(listModel);
@@ -124,6 +131,7 @@ class MostPopularTrends extends JFrame {
         popular_trends_panel.add(scrollDate2);
         popular_trends_panel.add(addButton);
         popular_trends_panel.add(dateInputField);
+        popular_trends_panel.add(to_excess_report_button);
 
         to_sales_report_button.addActionListener(new ActionListener() {
             @Override
@@ -150,6 +158,26 @@ class MostPopularTrends extends JFrame {
                     }
                 } else {
                     JOptionPane.showMessageDialog(MostPopularTrends.this, "Please select a valid input for two dates.");
+                    selectedDates.clear();
+                }
+            }
+        });
+
+        to_excess_report_button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (selectedDates.size() == 1) {
+                    boolean dateExists = true;
+
+                    if (!dateExists) {
+                        JOptionPane.showMessageDialog(MostPopularTrends.this, "Please select a valid date from the list.");
+                        selectedDates.clear();
+                    } else {
+                        dispose();
+                        new excess(selectedDates).setVisible(true);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(MostPopularTrends.this, "Please select a valid input for one date.");
                     selectedDates.clear();
                 }
             }
