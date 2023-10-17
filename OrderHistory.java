@@ -30,6 +30,12 @@ class OrderHistory extends JFrame {
         constraints.gridy = 0;
         gbl.setConstraints(to_most_popular_trends_button, constraints);
 
+        JButton popular_combinations_button = new JButton("Popular Combinations");
+        constraints = new GridBagConstraints();
+        constraints.gridx = 3;  
+        constraints.gridy = 0;  
+        gbl.setConstraints(popular_combinations_button, constraints);
+
         JLabel date_label = new JLabel("Date");
         constraints = new GridBagConstraints();
         constraints.gridx = 0;
@@ -66,6 +72,17 @@ class OrderHistory extends JFrame {
         order_history_panel.add(past_orders_labels);
         order_history_panel.add(price_label);
         order_history_panel.add(orders_box);
+        order_history_panel.add(popular_combinations_button);
+
+        popular_combinations_button.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                    new PopularCombination().setVisible(true);
+                }
+            }
+        );
 
         back_to_inventory_button.addActionListener(
             new ActionListener() {

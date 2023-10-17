@@ -10,7 +10,7 @@ public class Database {
         String dbConnectionString = "jdbc:postgresql://csce-315-db.engr.tamu.edu/csce315331_10b_db";
 
         try {
-            conn = DriverManager.getConnection(dbConnectionString, "csce315_910_devrpatel04", "password");
+            conn = DriverManager.getConnection(dbConnectionString, "csce315_910_devrpatel04", "dev_password");
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+": "+e.getMessage());
