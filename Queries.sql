@@ -160,3 +160,8 @@ SELECT item1, item2, COUNT(*) AS pair_count
 FROM paired_items
 GROUP BY item1, item2
 ORDER BY pair_count DESC;
+
+--Query 30, to test restock feature
+UPDATE inventory
+SET quantity = 5
+WHERE name = 'Flavor Name';
