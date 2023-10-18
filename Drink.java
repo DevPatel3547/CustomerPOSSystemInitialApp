@@ -130,6 +130,9 @@ public class Drink {
         str += toppings.get(toppings.size() - 1);
         return str;
     }
+    public ArrayList<String> getToppingList() {
+        return toppings;
+    }
 
     public String toString() {
         String str = "Name: " + name + "\nFlavor Price: " + flavorPrice + "\nTotal Price: " + getTotalPrice() + "\n Toppings: ";

@@ -432,8 +432,27 @@ class DrinkMenu extends JFrame {
                             cmd += ", '" + tempDrink.getToppings() + "'";
                             cmd += ", '" + tempDrink.getFlavorPrice() + "'";
                             cmd += ", '" + tempDrink.getTotalPrice() + "');";
-                            System.out.println(cmd);
+                            System.out.println(tempDrink.getSize());
                             database.addData(cmd);
+                            
+                            cmd = "UPDATE inventory SET Quantity = Quantity - 1 WHERE Name = '" + tempDrink.getSize() + "';";
+                            database.addData(cmd);
+                            cmd = "UPDATE inventory SET Quantity = Quantity - 1 WHERE Name = '" + tempDrink.getMilk() + "';";
+                            database.addData(cmd);
+                            cmd = "UPDATE inventory SET Quantity = Quantity - " + tempDrink.getIce() + " WHERE Name = 'Ice';";
+                            database.addData(cmd);
+                            cmd = "UPDATE inventory SET Quantity = Quantity - " + tempDrink.getSugar() + " WHERE Name = 'Sugar';";
+                            database.addData(cmd);
+                            cmd = "UPDATE inventory SET Quantity = Quantity - " + tempDrink.getBoba() + " WHERE Name = 'Boba';";
+                            database.addData(cmd);
+                            ArrayList<String> currToppings = tempDrink.getToppingList();
+                            for (int u = 0; u < currToppings.size(); ++u) {
+                                cmd = "UPDATE inventory SET Quantity = Quantity - 1 WHERE Name = '" + currToppings.get(u) + "' AND Category = 'Add-Ons';";
+                                database.addData(cmd);
+                            }
+                            cmd = "UPDATE inventory SET Quantity = Quantity - 1 WHERE Name = 'Flavor Name';";
+                            database.addData(cmd);
+                            
                         }
                     } catch (Exception q) {
                         q.printStackTrace();
@@ -525,7 +544,7 @@ class DrinkMenu extends JFrame {
 
         JLabel name = new JLabel(flavor);
 
-        JLabel price = new JLabel("$" + cost);
+        JLabel price = new JLabel(String.format("$%.2f", cost));
 
         JButton addButton = new JButton("Add");
         // addButton.setEnabled(false);
