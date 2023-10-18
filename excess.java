@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
+import javax.swing.border.LineBorder;   
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.*;
@@ -63,47 +63,44 @@ class excess extends JFrame {
         constraints.gridy = 2;
         gbl.setConstraints(item_name_label, constraints);
         
-        JLabel item_quantity_label = new JLabel("Items that sold less tahn 10%");// TYPE OF ITEM
-        constraints = new GridBagConstraints();
-        constraints.gridx = 3;
-        constraints.gridy = 2;
-        gbl.setConstraints(item_quantity_label, constraints);
 
         DefaultListModel<String> listModel = new DefaultListModel<>();
         JList<String> excessList = new JList<>(listModel);
         try {
             // Use the provided single date as the timestamp
             String date1 = selectedDates.iterator().next();
-            String sql = "SELECT i.name AS \"Menu Item\", " +
-             "       (i.quantity - COALESCE(sd.sold_count, 0)) AS \"Items that sold less than 10%\" " +
-             "FROM inventory i " +
-             "LEFT JOIN (" +
-             "    SELECT unnest(string_to_array(toppings, ', ')) AS sold_item, " +
-             "           COUNT(*) AS sold_count " +
-             "    FROM orderhistory " +
-             "    WHERE CAST(date AS timestamp) BETWEEN '" + date1 + "' AND NOW() " +
-             "    GROUP BY sold_item" +
-             ") sd ON i.name = sd.sold_item " +
-             "WHERE (i.quantity - COALESCE(sd.sold_count, 0)) < 0.1 * i.quantity;";
+            String sql = "SELECT i.name AS \"Menu Item\" " +
+                "FROM inventory i " +
+                "LEFT JOIN (" +
+                "    SELECT unnest(string_to_array(toppings, ', ')) AS sold_item, " +
+                "           COUNT(*) AS sold_count " +
+                "    FROM orderhistory " +
+                "    WHERE CAST(date AS timestamp) BETWEEN '" + date1 + "' AND NOW() " +
+                "    GROUP BY sold_item" +
+                ") sd ON i.name = sd.sold_item " +
+                "WHERE (i.quantity - COALESCE(sd.sold_count, 0)) < 0.1 * i.quantity;";
             ResultSet resultSet = database.getData(sql);
 
             while (resultSet.next()) {
-                String itemName = resultSet.getString("item_name");
-                int quantity = resultSet.getInt("quantity");
-                int soldCount = resultSet.getInt("sold_count");
-
-                // Format the item name, quantity, and sold count and add it to the list model
-                String formattedEntry = String.format("%-70s %5d %5d", itemName, quantity, soldCount);
-                listModel.addElement(formattedEntry);
+                String itemName = resultSet.getString("Menu Item");
+                
+                // Add only the item name to the list model
+                listModel.addElement(itemName);
             }
 
             resultSet.close();
-           
+        
         } catch (SQLException e) {
             System.out.println("Error: Could not load excess report");
             e.printStackTrace();
             System.exit(0);
         }
+
+
+
+
+
+
 
         // Create a custom cell renderer for right-aligning the quantities
         excessList.setCellRenderer(new DefaultListCellRenderer() {
@@ -137,7 +134,6 @@ class excess extends JFrame {
         //excess_panel.add(to_sales_together_button);
         excess_panel.add(current_invetory_label);
         excess_panel.add(item_name_label);
-        excess_panel.add(item_quantity_label);
         excess_panel.add(buy_more_supplies_button);
         excess_panel.add(scrollPane);
 
