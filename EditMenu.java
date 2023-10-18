@@ -196,6 +196,15 @@ class EditMenu extends JFrame {
                             d.printStackTrace();
                             System.out.println("Could not update price of " + temp_name);
                         }
+
+                        try {
+                            String sql = "UPDATE inventory SET price = " + new_price_field.getText() + " WHERE name = \'" + temp_name + "\';";
+                            database.addData(sql);
+                            //updateMenu();
+                        } catch (Exception d) {
+                            d.printStackTrace();
+                            System.out.println("Could not update price of " + temp_name);
+                        }
                     }
                 }
             }
@@ -205,34 +214,91 @@ class EditMenu extends JFrame {
             new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    JPanel add_dialog = new JPanel(new GridLayout(0, 1));
+                    JPanel add_choice_dialog = new JPanel(new GridLayout(0, 1));
+                    add_choice_dialog.add(new JLabel("Would you like to add a new Drink or Topping?"));
+                    JButton new_drink_button = new JButton("New Drink");
+                    JButton new_topping_button = new JButton("New Topping");
 
-                    add_dialog.add(new JLabel("Enter the name of the new item (as it should appear on the menu)"));
-                    JTextField new_item_name = new JTextField();
-                    add_dialog.add(new_item_name);
+                    new_drink_button.addActionListener(
+                        new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                //add_choice_dialog.setVisible(false);
+                                JPanel add_dialog = new JPanel(new GridLayout(0, 1));
 
-                    add_dialog.add(new JLabel("Enter the category of the new item (Drink or Topping)"));
-                    JTextField new_item_category = new JTextField();
-                    add_dialog.add(new_item_category);
+                                add_dialog.add(new JLabel("Enter the name of the new item (as it should appear on the menu)"));
+                                JTextField new_item_name = new JTextField();
+                                add_dialog.add(new_item_name);
 
-                    add_dialog.add(new JLabel("Enter the price of the new item (no $)"));
-                    JTextField new_item_price = new JTextField();
-                    add_dialog.add(new_item_price);
+                                add_dialog.add(new JLabel("Enter the price of the new item (no $)"));
+                                JTextField new_item_price = new JTextField();
+                                add_dialog.add(new_item_price);
 
-                    int result = JOptionPane.showConfirmDialog(edit_menu_panel, add_dialog, "Create New Item", JOptionPane.OK_CANCEL_OPTION);
+                                int result = JOptionPane.showConfirmDialog(edit_menu_panel, add_dialog, "Create New Drink", JOptionPane.OK_CANCEL_OPTION);
 
-                    if(result == JOptionPane.OK_OPTION) {
-                        try {
-                            String sql = "INSERT INTO menu (type, nameofitem, cost, numbersoldtoday)";
-                            sql += " VALUES (\'" + new_item_category.getText() + "\', \'" + new_item_name.getText() + "\', \'" + new_item_price.getText() + "\', 0);";
-                            database.addData(sql);
-                            //updateMenu();
-                        } catch (Exception d) {
-                            d.printStackTrace();
-                            System.out.println("Could not add item");
+                                if(result == JOptionPane.OK_OPTION) {
+                                    try {
+                                        String sql = "INSERT INTO menu (type, nameofitem, cost, numbersoldtoday)";
+                                        sql += " VALUES (\'Drink\', \'" + new_item_name.getText() + "\', \'" + new_item_price.getText() + "\', 0);";
+                                        database.addData(sql);
+                                    } catch (Exception d) {
+                                        d.printStackTrace();
+                                        System.out.println("Could not add drink");
+                                    }
+                                }
+                            }
                         }
-                    }
-                    
+                    );
+
+                    new_topping_button.addActionListener(
+                        new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                JPanel add_dialog = new JPanel(new GridLayout(0, 1));
+
+                                add_dialog.add(new JLabel("Enter the name of the new item (as it should appear on the menu)"));
+                                JTextField new_item_name = new JTextField();
+                                add_dialog.add(new_item_name);
+
+                                add_dialog.add(new JLabel("Enter the category of the new item\n(Add-Ons or Milk)"));
+                                JTextField new_item_category = new JTextField();
+                                add_dialog.add(new_item_category);
+
+                                add_dialog.add(new JLabel("Enter the price of the new item (no $)"));
+                                JTextField new_item_price = new JTextField();
+                                add_dialog.add(new_item_price);
+
+                                int result = JOptionPane.showConfirmDialog(edit_menu_panel, add_dialog, "Create New Topping", JOptionPane.OK_CANCEL_OPTION);
+
+                                if(result == JOptionPane.OK_OPTION) {
+                                    try {
+                                        String sql = "INSERT INTO inventory (name, category, quantity, price, min)";
+                                        sql += " VALUES (\'" + new_item_name.getText() + "\', \'" + new_item_category.getText() + "\', 0, \'" + new_item_price.getText() + "\', 10);";
+                                        database.addData(sql);
+                                    } catch (Exception d) {
+                                        d.printStackTrace();
+                                        System.out.println("Could not add topping");
+                                    }
+
+                                    if(new_item_category.getText().equals("Add-Ons")) {
+                                        try {
+                                            String sql = "INSERT INTO menu (type, nameofitem, cost, numbersoldtoday)";
+                                            sql += " VALUES (\'Topping\', \'" + new_item_name.getText() + "\', \'" + new_item_price.getText() + "\', 0);";
+                                            database.addData(sql);
+                                        } catch (Exception d) {
+                                            d.printStackTrace();
+                                            System.out.println("Could not add topping");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    );
+
+                    add_choice_dialog.add(new_drink_button);
+                    add_choice_dialog.add(new_topping_button);
+
+                    JOptionPane.showConfirmDialog(edit_menu_panel, add_choice_dialog, "Drink or Topping?", JOptionPane.DEFAULT_OPTION);            
                 }
             }
         );
@@ -259,6 +325,15 @@ class EditMenu extends JFrame {
                         } catch (Exception d) {
                             d.printStackTrace();
                             System.out.println("Error: Could not delete \"" + temp_name + "\" from menu.");
+                        }
+
+                        try {
+                            String sql = "DELETE FROM inventory WHERE name = \'" + temp_name + "\';";
+                            database.addData(sql);
+                            //updateMenu();
+                        } catch (Exception d) {
+                            d.printStackTrace();
+                            System.out.println("Error: Could not delete \"" + temp_name + "\" from inventory.");
                         }
                     }
                 }
