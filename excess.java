@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.Border;
-import javax.swing.border.LineBorder;   
+import javax.swing.border.LineBorder;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.*;
@@ -134,6 +134,7 @@ class excess extends JFrame {
         //excess_panel.add(to_sales_together_button);
         excess_panel.add(current_invetory_label);
         excess_panel.add(item_name_label);
+
         excess_panel.add(buy_more_supplies_button);
         excess_panel.add(scrollPane);
 

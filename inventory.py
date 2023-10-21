@@ -5,8 +5,35 @@ import csv
 
 # Define a list of inventory items
 inventory_items = [
-    # Drink
-    {"Name": "Flavor Name", "Category": "Flavor", "Quantity": 500, "Price": 5.00, "min": 10, "threshold": 50, "needRestock": "No"},
+
+    # Types of drink , each drink will have one type classification     
+    {"Name": "Brew Tea", "Category": "Type", "Quantity": 500, "Price": 5.00, "min": 10, "threshold": 50, "needRestock": "No"},
+    {"Name": "Deerioca", "Category": "Type", "Quantity": 500, "Price": 5.00, "min": 10, "threshold": 50, "needRestock": "No"},    
+    {"Name": "Lulu", "Category": "Type", "Quantity": 500, "Price": 5.00, "min": 10, "threshold": 50, "needRestock": "No"},
+    {"Name": "Velvet", "Category": "Type", "Quantity": 500, "Price": 5.00, "min": 10, "threshold": 50, "needRestock": "No"},
+    {"Name": "Milk Tea", "Category": "Type", "Quantity": 500, "Price": 5.00, "min": 10, "threshold": 50, "needRestock": "No"},
+    {"Name": "Yogurt", "Category": "Type", "Quantity": 500, "Price": 5.00, "min": 10, "threshold": 50, "needRestock": "No"},
+    {"Name": "Frappe", "Category": "Type", "Quantity": 500, "Price": 5.00, "min": 10, "threshold": 50, "needRestock": "No"},
+    {"Name": "Cold Brew", "Category": "Type", "Quantity": 500, "Price": 5.00, "min": 10, "threshold": 50, "needRestock": "No"},
+
+    #recipe for drinks
+    {"Name": "Brown Sugar", "Category": "Recipe", "Quantity": 500, "Price": 1.00, "min": 10, "threshold": 50, "needRestock": "No"},
+    {"Name": "Regular Sugar", "Category": "Recipe", "Quantity": 500, "Price": 1.00, "min": 10, "threshold": 50, "needRestock": "No"},
+
+    {"Name": "Milk", "Category": "Recipe", "Quantity": 500, "Price": 1.00, "min": 10, "threshold": 50, "needRestock": "No"},
+    {"Name": "Creamer", "Category": "Recipe", "Quantity": 500, "Price": 1.00, "min": 10, "threshold": 50, "needRestock": "No"},
+
+    {"Name": "Boba", "Category": "Recipe", "Quantity": 500, "Price": 1.00, "min": 10, "threshold": 50, "needRestock": "No"}, #also in custom amounts
+    {"Name": "Jelly", "Category": "Recipe", "Quantity": 500, "Price": 1.00, "min": 10, "threshold": 50, "needRestock": "No"},
+    {"Name": "Cocoa", "Category": "Recipe", "Quantity": 500, "Price": 1.00, "min": 10, "threshold": 50, "needRestock": "No"},
+    {"Name": "Matcha", "Category": "Recipe", "Quantity": 500, "Price": 1.00, "min": 10, "threshold": 50, "needRestock": "No"},
+
+    #Fruits for Lulu Type Drinks
+    {"Name": "Mango", "Category": "Fruit", "Quantity": 500, "Price": 1.00, "min": 10, "threshold": 50, "needRestock": "No"},
+    {"Name": "Strawberry", "Category": "Fruit", "Quantity": 500, "Price": 1.00, "min": 10, "threshold": 50, "needRestock": "No"},
+    {"Name": "Lychee", "Category": "Fruit", "Quantity": 500, "Price": 1.00, "min": 10, "threshold": 50, "needRestock": "No"},
+    {"Name": "Peach", "Category": "Fruit", "Quantity": 500, "Price": 1.00, "min": 10, "threshold": 50, "needRestock": "No"},
+    {"Name": "Grape", "Category": "Fruit", "Quantity": 500, "Price": 1.00, "min": 10, "threshold": 50, "needRestock": "No"},
 
     # Custom Amounts
     {"Name": "Ice", "Category": "Ingredient", "Quantity": 500, "Price": 1.00, "min": 10, "threshold": 50, "needRestock": "No"},

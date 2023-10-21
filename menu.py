@@ -14,6 +14,52 @@ boba_price = [5.99, 5.99, 6.45, 6.45, 5.99, 5.99, 5.25, 4.99, 4.99, 4.99, 6.99, 
 # Create a list to store the number sold during the day for drinks (you can fill this with actual data)
 drinks_sold = [200, 180, 220, 150, 160, 210, 240, 195, 205, 190, 175, 185, 230, 215, 205, 210, 220, 230, 240, 180, 195, 190, 185, 220, 215, 200, 210, 195, 190, 180, 175, 210, 230, 220, 205, 215, 240, 185, 190, 195, 200, 175, 220]
 
+# Define a list of ingredients for each drink
+drink_ingredients = [
+    ["Brown Sugar", "Milk"],
+    ["Brown Sugar", "Milk"],
+    ["Brown Sugar", "Milk"],
+    ["Brown Sugar", "Milk"],
+    ["Cocoa", "Brown Sugar", "Milk"],
+    ["Matcha", "Brown Sugar", "Milk"],
+    ["Peach", "Brew Tea"],
+    ["Brew Tea"],
+    ["Brew Tea"],
+    ["Brew Tea"],
+    ["Mango", "LuLu"],
+    ["Strawberry", "LuLu"],
+    ["Orange", "LuLu"],
+    ["Peach", "Milk Tea", "LuLu"],
+    ["Lychee", "LuLu"],
+    ["Snow Velvet", "LuLu"],
+    ["Snow Velvet", "Peach", "Milk Tea"],
+    ["Snow Velvet", "Milk Tea"],
+    ["Snow Velvet"],
+    ["Snow Velvet", "Milk Tea"],
+    [ "Milk Tea"],
+    [ "Milk Tea"],
+    [ "Milk Tea"],
+    ["Milk Tea"],
+    ["Lychee", "Milk Tea"],
+    ["Mango", "Milk Tea", "Pearl"],
+    ["Milk Tea"],
+    ["Yogurt"],
+    ["Create Your Own Yogurt"],
+    ["Matcha", "Yogurt"],
+    ["Peach","Yogurt"],
+    ["Yogurt", "LuLu"],
+    ["Deerioca", "Brew Tea"],
+    ["Brown Sugar", "Creamer", "Brew Tea"],
+    ["Cocoa", "Creamer", "Brew Tea"],
+    ["Milk Tea", "Brew Tea"],
+    ["Snow Velvet", "Creamer", "Brew Tea"],
+    ["Frappe"],
+    ["Frappe"],
+    [ "Milk Tea"],
+    ["Cocoa", "Milk Tea"],
+    ["Smoothie"]
+]
+
 # Create a list of dictionaries to represent the menu
 menu = []
 
@@ -23,7 +69,8 @@ for i in range(len(toppings)):
         "Type": "Topping",
         "Name of Item": toppings[i],
         "Cost of Item": toppings_price[i],
-        "Numbers Sold During Day": toppings_sold[i]
+        "Numbers Sold During Day": toppings_sold[i],
+        "Ingredients": "N/A"  # Toppings do not have ingredients
     }
     menu.append(item)
 
@@ -33,14 +80,15 @@ for i in range(len(boba_flavors)):
         "Type": "Drink",
         "Name of Item": boba_flavors[i],
         "Cost of Item": boba_price[i],
-        "Numbers Sold During Day": drinks_sold[i]
+        "Numbers Sold During Day": drinks_sold[i],
+        "Ingredients": ", ".join(drink_ingredients[i])  # Join ingredients into a comma-separated string
     }
     menu.append(item)
 
 # Write the menu to a single CSV file
 csv_file = "menu.csv"
 with open(csv_file, mode='w', newline='') as file:
-    fieldnames = ["Type", "Name of Item", "Cost of Item", "Numbers Sold During Day"]
+    fieldnames = ["Type", "Name of Item", "Cost of Item", "Numbers Sold During Day", "Ingredients"]
     writer = csv.DictWriter(file, fieldnames=fieldnames)
     writer.writeheader()
     for item in menu:
