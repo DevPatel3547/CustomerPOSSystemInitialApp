@@ -22,12 +22,14 @@ public class Drink {
     //First letter of each word is capitalized
     // "Coconut Jelly", "Snow Velvet", "Rainbow Jelly", "Brown Sugar Boba", "Crystal Boba", "Creme Brulee"
     private ArrayList<String> toppings; 
+
+    private String ingredients;
     
     private double flavorPrice;
     private double totalPrice;
 
     public Drink() {
-        name = size = milk = "";
+        name = size = milk = ingredients = "";
         ice = sugar = boba = 0;
         id = 0;
         flavorPrice = totalPrice = 0.0;
@@ -36,11 +38,18 @@ public class Drink {
 
     public Drink(String drinkName) {
         name = drinkName;
-        size = milk = "";
+        size = milk = ingredients = "";
         ice = sugar = boba = 0;
         id = 0;
         flavorPrice = totalPrice = 0.0;
         toppings = new ArrayList<String>();
+    }
+
+    public String getIngredients() {
+        return ingredients;
+    }
+    public void setIngredients(String s) {
+        ingredients = s;
     }
 
     public double getFlavorPrice() {

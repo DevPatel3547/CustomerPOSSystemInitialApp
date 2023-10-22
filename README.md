@@ -7,7 +7,7 @@ inventory.py: Wrote into csv file and display the inventory to make each drink a
 Queries.sql: List of queries for database
 
 To log into database:
-psql -h csce-315-db.engr.tamu.edu -U csce315_910_netID -d csce315331_10b_db
+psql -h csce-315-db.engr.tamu.edu -U csce315_910_devrpatel04 -d csce315331_10b_db
 
 To run database.java:
 //Windows: java -cp ".;postgresql-42.2.8.jar" Database

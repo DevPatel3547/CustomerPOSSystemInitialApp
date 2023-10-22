@@ -19,6 +19,7 @@ class DrinkMenu extends JFrame {
     private Database database;
     private String currDrinkName;
     private double currDrinkPrice;
+    private String currIngredients;
     private Drink currDrink;
     private int id;
     private ArrayList<Drink> currCartList;
@@ -75,15 +76,17 @@ class DrinkMenu extends JFrame {
 
         ArrayList<String> flavors = new ArrayList<String>();
         ArrayList<Double> prices = new ArrayList<Double>();
+        ArrayList<String> ingredients = new ArrayList<String>();
         try {
-            ResultSet query = database.getData("SELECT \"nameofitem\" AS Drink, \"cost\" AS Price, \"numbersoldtoday\" AS SoldDuringDay FROM menu WHERE Type = 'Drink';");
+            ResultSet query = database.getData("SELECT \"name_of_item\" AS Drink, \"cost_of_item\" AS Price, \"ingredients\" AS Ingredients FROM menu WHERE Type = 'Drink';");
 
             while (query.next()) {
                 flavors.add(query.getString("drink"));
                 prices.add(query.getDouble("price"));
+                ingredients.add(query.getString("ingredients"));
                 // System.out.println("Drink: " + query.getString("drink"));
                 // System.out.println("Price: " + query.getString("price"));
-                // System.out.println("Number Sold: " + query.getString("soldduringday"));
+                // System.out.println("Ingredients: " + query.getString("ingredients"));
             }
         } catch (Exception e) {
             System.out.println("ERROR:");
@@ -92,7 +95,7 @@ class DrinkMenu extends JFrame {
         }
 
         for (int i = 0; i < flavors.size(); ++i) {
-            createFlavor(flavors.get(i), prices.get(i), i);
+            createFlavor(flavors.get(i), prices.get(i), ingredients.get(i), i);
         }
 
         flavorMenu.add(scrollPane, BorderLayout.CENTER);
@@ -432,7 +435,7 @@ class DrinkMenu extends JFrame {
                             cmd += ", '" + tempDrink.getToppings() + "'";
                             cmd += ", '" + tempDrink.getFlavorPrice() + "'";
                             cmd += ", '" + tempDrink.getTotalPrice() + "');";
-                            System.out.println(tempDrink.getSize());
+                            // System.out.println(tempDrink.getSize());
                             database.addData(cmd);
                             
                             cmd = "UPDATE inventory SET Quantity = Quantity - 1 WHERE Name = '" + tempDrink.getSize() + "';";
@@ -450,8 +453,12 @@ class DrinkMenu extends JFrame {
                                 cmd = "UPDATE inventory SET Quantity = Quantity - 1 WHERE Name = '" + currToppings.get(u) + "' AND Category = 'Add-Ons';";
                                 database.addData(cmd);
                             }
-                            cmd = "UPDATE inventory SET Quantity = Quantity - 1 WHERE Name = 'Flavor Name';";
-                            database.addData(cmd);
+                            String[] itemIngredients = tempDrink.getIngredients().split(", ");
+                            for (String s : itemIngredients) {
+                                // System.out.println(s);
+                                cmd = "UPDATE inventory SET Quantity = Quantity - 1 WHERE Name = '" + s + "';";
+                                database.addData(cmd);
+                            }
                             
                         }
                     } catch (Exception q) {
@@ -472,6 +479,7 @@ class DrinkMenu extends JFrame {
                     curCard = 1;
                     currDrink = new Drink(currDrinkName);
                     currDrink.setFlavorPrice(currDrinkPrice);
+                    currDrink.setIngredients(currIngredients);
                     currDrink.setId(id);
                     id += 1;
                     currDrink.setSize(sizeDropDown.getSelectedItem().toString());
@@ -539,7 +547,8 @@ class DrinkMenu extends JFrame {
         add(cardPanel);
     }
 
-    private void createFlavor(String flavor, double cost, int index) {
+    private void createFlavor(String flavor, double cost, String ingredients, int index) {
+        // if (!flavor.equals("Mango LuLu")) return;
         JPanel flavorPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
         JLabel name = new JLabel(flavor);
@@ -549,14 +558,22 @@ class DrinkMenu extends JFrame {
         JButton addButton = new JButton("Add");
         // addButton.setEnabled(false);
 
+        String[] drinkParts = ingredients.split(", ");
+
         try {
-            ResultSet query3 = database.getData("SELECT * FROM inventory WHERE Category = 'Flavor';");
-            query3.next();
-            // System.out.println("test: " + query3.getString("quantity"));
-            if (Integer.parseInt(query3.getString("quantity")) == 0) {
-                // System.out.println(query3.getString("quantity"));
-                addButton.setEnabled(false);
+            // System.out.println("Start:");
+            for (int i = 0; i < drinkParts.length; ++i) {
+                // System.out.println("Ingredient: " + drinkParts[i]);
+                ResultSet query3 = database.getData("SELECT * FROM inventory WHERE Name = '" + drinkParts[i].trim() + "';");
+                query3.next();
+                if (query3.getInt("quantity") < 1) {
+                    addButton.setEnabled(false);
+                }
+                // System.out.println("Working: " + query3.getString("name"));
             }
+            // System.out.println("Done");
+
+
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(0);
@@ -568,6 +585,7 @@ class DrinkMenu extends JFrame {
                 curCard = 2;
                 currDrinkName = flavor;
                 currDrinkPrice = cost;
+                currIngredients = ingredients;
                 cardLayout.show(cardPanel, "" + curCard);
             }
         });
