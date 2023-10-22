@@ -9,10 +9,15 @@ import java.awt.event.WindowEvent;
 import java.sql.*;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+
 
 class MostPopularTrends extends JFrame {
     private Database database;
-    private Set<String> selectedDates;
+    private Set<String> selectedDates = new LinkedHashSet<>();
     private JTextField dateInputField;
    
     MostPopularTrends() {
@@ -207,13 +212,12 @@ class MostPopularTrends extends JFrame {
     private void handleAddButton() {
         String selectedDate = dateInputField.getText();
         if (!selectedDate.isEmpty()) {
-            selectedDates.add(selectedDate);
+            List<String> sortedDateList = new ArrayList<>(selectedDates);
+            sortedDateList.add(selectedDate);
+            Collections.sort(sortedDateList);
+            selectedDates = new LinkedHashSet<>(sortedDateList);
+    
             dateInputField.setText("");
-        }
-    }
-    private void addDateToList(String date) {
-        if (!selectedDates.contains(date)) {
-            selectedDates.add(date);
         }
     }
 
